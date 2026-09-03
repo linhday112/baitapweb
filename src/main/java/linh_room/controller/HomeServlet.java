@@ -11,6 +11,8 @@ import jakarta.servlet.http.HttpServletResponse;
 @WebServlet("/home")
 public class HomeServlet extends HttpServlet {
 
+    private static final long serialVersionUID = 1L;
+
     @Override
     protected void doGet(
             HttpServletRequest request,
@@ -18,6 +20,6 @@ public class HomeServlet extends HttpServlet {
             throws ServletException, IOException {
 
         request.getRequestDispatcher("/views/index.jsp")
-               .forward(request, response);
+               .include(request, response);
     }
 }

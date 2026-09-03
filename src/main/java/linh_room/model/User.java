@@ -27,13 +27,35 @@ public class User implements Serializable {
     @Column(name = "password", length = 255, nullable = false)
     private String password;
 
-    @Column(name = "full_name", length = 100, nullable = false)
+    @Column(name = "full_name", length = 100)
     private String fullName;
 
-    @Column(name = "role_id", nullable = false)
-    private int roleId;
+    @Column(name = "role_id")
+    private Integer roleId = 2;
+
+    @Column(name = "role", length = 20, nullable = false)
+    private String role = "USER";
+
+    @Column(name = "phone", length = 20)
+    private String phone;
+
+    @Column(name = "images", length = 255)
+    private String images;
+
+    @jakarta.persistence.Temporal(jakarta.persistence.TemporalType.TIMESTAMP)
+    @Column(name = "created_at", insertable = false, updatable = false)
+    private java.util.Date createdAt;
 
     public User() {
+    }
+
+    public User(int id, String username, String password, String role) {
+        this.id = id;
+        this.username = username;
+        this.password = password;
+        this.role = role != null ? role : "USER";
+        this.fullName = username;
+        this.roleId = "ADMIN".equalsIgnoreCase(this.role) ? 1 : 2;
     }
 
     public User(int id, String username, String password, String fullName, int roleId) {
@@ -42,6 +64,16 @@ public class User implements Serializable {
         this.password = password;
         this.fullName = fullName;
         this.roleId = roleId;
+        this.role = (roleId == 1) ? "ADMIN" : "USER";
+    }
+
+    public User(int id, String username, String password, String fullName, Integer roleId, String role) {
+        this.id = id;
+        this.username = username;
+        this.password = password;
+        this.fullName = fullName;
+        this.roleId = roleId;
+        this.role = role != null ? role : "USER";
     }
 
     public int getId() {
@@ -69,7 +101,10 @@ public class User implements Serializable {
     }
 
     public String getFullName() {
-        return fullName;
+        if (fullName != null && !fullName.isBlank()) {
+            return fullName;
+        }
+        return username;
     }
 
     public void setFullName(String fullName) {
@@ -77,10 +112,66 @@ public class User implements Serializable {
     }
 
     public int getRoleId() {
-        return roleId;
+        if (roleId != null) {
+            return roleId;
+        }
+        return "ADMIN".equalsIgnoreCase(role) ? 1 : 2;
     }
 
     public void setRoleId(int roleId) {
         this.roleId = roleId;
+    }
+
+    public String getRole() {
+        if (role != null && !role.isBlank()) {
+            return role;
+        }
+        return (roleId != null && roleId == 1) ? "ADMIN" : "USER";
+    }
+
+    public void setRole(String role) {
+        this.role = role;
+    }
+
+    public java.util.Date getCreatedAt() {
+        return createdAt;
+    }
+
+    public void setCreatedAt(java.util.Date createdAt) {
+        this.createdAt = createdAt;
+    }
+
+    public String getPhone() {
+        return phone;
+    }
+
+    public void setPhone(String phone) {
+        this.phone = phone;
+    }
+
+    public String getImages() {
+        return images;
+    }
+
+    public void setImages(String images) {
+        this.images = images;
+    }
+
+    public String getAvatarUrl(String contextPath) {
+        if (images != null && !images.isBlank()) {
+            if (images.startsWith("http://") || images.startsWith("https://")) {
+                return images;
+            }
+            String base = (contextPath == null || contextPath.isEmpty()) ? "" : contextPath;
+            return base + "/image?fname=" + images;
+        }
+        return "https://cdn-icons-png.flaticon.com/512/3135/3135715.png";
+    }
+
+    public boolean isAdmin() {
+        if (role != null && !role.isBlank()) {
+            return "ADMIN".equalsIgnoreCase(role.trim());
+        }
+        return roleId != null && roleId == 1;
     }
 }

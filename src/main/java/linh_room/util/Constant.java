@@ -14,4 +14,13 @@ public class Constant {
         }
         return dir;
     }
+
+    public static String getUserUploadDir() {
+        String dir = UPLOAD_DIR + File.separator + "user";
+        File folder = new File(dir);
+        if (!folder.exists()) {
+            folder.mkdirs();
+        }
+        return dir;
+    }
 }

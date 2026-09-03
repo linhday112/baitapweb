@@ -52,26 +52,29 @@ public class LoginServlet extends HttpServlet {
             return;
         }
 
-        User user = userService.login(username, password);
+        try {
+            User user = userService.login(username, password);
 
-        if (user != null) {
-            request.getSession(true).setAttribute("account", user);
-            request.getSession().setMaxInactiveInterval(30 * 60);
+            if (user != null) {
+                request.getSession(true).setAttribute("account", user);
+                request.getSession().setMaxInactiveInterval(30 * 60);
 
-            if ("on".equals(request.getParameter("remember"))) {
-                Cookie cookie = new Cookie("rememberedUsername", user.getUsername());
-                cookie.setMaxAge(7 * 24 * 60 * 60);
-                cookie.setHttpOnly(true);
-                cookie.setPath(request.getContextPath().isEmpty() ? "/" : request.getContextPath());
-                response.addCookie(cookie);
+                if ("on".equals(request.getParameter("remember"))) {
+                    Cookie cookie = new Cookie("rememberedUsername", user.getUsername());
+                    cookie.setMaxAge(7 * 24 * 60 * 60);
+                    cookie.setHttpOnly(true);
+                    cookie.setPath(request.getContextPath().isEmpty() ? "/" : request.getContextPath());
+                    response.addCookie(cookie);
+                }
+
+                response.sendRedirect(request.getContextPath() + "/home");
+            } else {
+                request.setAttribute("alert", "Tài khoản hoặc mật khẩu không chính xác.");
+                request.getRequestDispatcher("/views/login.jsp").include(request, response);
             }
-
-            response.sendRedirect(
-                    request.getContextPath() + "/home");
-
-        } else {
-            request.setAttribute("alert", "Tài khoản hoặc mật khẩu không chính xác.");
-            request.getRequestDispatcher("/views/login.jsp").forward(request, response);
+        } catch (Exception e) {
+            request.setAttribute("alert", "Lỗi kết nối CSDL MySQL! Vui lòng đảm bảo MySQL Server (Dịch vụ MySQL80) đang chạy.");
+            request.getRequestDispatcher("/views/login.jsp").include(request, response);
         }
     }
 }

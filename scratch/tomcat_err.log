@@ -1,0 +1,86 @@
+thg 9 03, 2026 11:49:07 SA org.apache.catalina.startup.VersionLoggerListener log
+INFO: Server version name:   Apache Tomcat/11.0.4
+thg 9 03, 2026 11:49:07 SA org.apache.catalina.startup.VersionLoggerListener log
+INFO: Server built:          Feb 13 2025 10:17:50 UTC
+thg 9 03, 2026 11:49:07 SA org.apache.catalina.startup.VersionLoggerListener log
+INFO: Server version number: 11.0.4.0
+thg 9 03, 2026 11:49:07 SA org.apache.catalina.startup.VersionLoggerListener log
+INFO: OS Name:               Windows 10
+thg 9 03, 2026 11:49:07 SA org.apache.catalina.startup.VersionLoggerListener log
+INFO: OS Version:            10.0
+thg 9 03, 2026 11:49:07 SA org.apache.catalina.startup.VersionLoggerListener log
+INFO: Architecture:          amd64
+thg 9 03, 2026 11:49:07 SA org.apache.catalina.startup.VersionLoggerListener log
+INFO: Java Home:             C:\Program Files\Java\jdk-22
+thg 9 03, 2026 11:49:07 SA org.apache.catalina.startup.VersionLoggerListener log
+INFO: JVM Version:           22+36-2370
+thg 9 03, 2026 11:49:07 SA org.apache.catalina.startup.VersionLoggerListener log
+INFO: JVM Vendor:            Oracle Corporation
+thg 9 03, 2026 11:49:07 SA org.apache.catalina.startup.VersionLoggerListener log
+INFO: CATALINA_BASE:         C:\Users\DinhVu\Documents\workspace-spring-tools-for-eclipse-5.3.0.RELEASE\.metadata\.plugins\org.eclipse.wst.server.core\tmp1
+thg 9 03, 2026 11:49:07 SA org.apache.catalina.startup.VersionLoggerListener log
+INFO: CATALINA_HOME:         C:\web\apache-tomcat-11.0.4
+thg 9 03, 2026 11:49:07 SA org.apache.catalina.startup.VersionLoggerListener log
+INFO: Command line argument: -Dcatalina.base=C:\Users\DinhVu\Documents\workspace-spring-tools-for-eclipse-5.3.0.RELEASE\.metadata\.plugins\org.eclipse.wst.server.core\tmp1
+thg 9 03, 2026 11:49:07 SA org.apache.catalina.startup.VersionLoggerListener log
+INFO: Command line argument: -Dcatalina.home=C:\web\apache-tomcat-11.0.4
+thg 9 03, 2026 11:49:07 SA org.apache.catalina.startup.VersionLoggerListener log
+INFO: Command line argument: -Dwtp.deploy=C:\Users\DinhVu\Documents\workspace-spring-tools-for-eclipse-5.3.0.RELEASE\.metadata\.plugins\org.eclipse.wst.server.core\tmp1\wtpwebapps
+thg 9 03, 2026 11:49:07 SA org.apache.catalina.startup.VersionLoggerListener log
+INFO: Command line argument: -Djava.library.path=C:\web\apache-tomcat-11.0.4\bin
+thg 9 03, 2026 11:49:07 SA org.apache.catalina.startup.VersionLoggerListener log
+INFO: Command line argument: --enable-native-access=ALL-UNNAMED
+thg 9 03, 2026 11:49:07 SA org.apache.catalina.startup.VersionLoggerListener log
+INFO: Command line argument: --add-opens=java.base/java.lang=ALL-UNNAMED
+thg 9 03, 2026 11:49:07 SA org.apache.catalina.startup.VersionLoggerListener log
+INFO: Command line argument: --add-opens=java.base/java.io=ALL-UNNAMED
+thg 9 03, 2026 11:49:07 SA org.apache.catalina.startup.VersionLoggerListener log
+INFO: Command line argument: --add-opens=java.base/java.util=ALL-UNNAMED
+thg 9 03, 2026 11:49:07 SA org.apache.catalina.startup.VersionLoggerListener log
+INFO: Command line argument: --add-opens=java.base/java.util.concurrent=ALL-UNNAMED
+thg 9 03, 2026 11:49:07 SA org.apache.catalina.startup.VersionLoggerListener log
+INFO: Command line argument: --add-opens=java.rmi/sun.rmi.transport=ALL-UNNAMED
+thg 9 03, 2026 11:49:07 SA org.apache.catalina.startup.VersionLoggerListener log
+INFO: Command line argument: -Dfile.encoding=UTF-8
+thg 9 03, 2026 11:49:07 SA org.apache.catalina.core.AprLifecycleListener lifecycleEvent
+INFO: The Apache Tomcat Native library which allows using OpenSSL was not found on the java.library.path: [C:\web\apache-tomcat-11.0.4\bin]
+thg 9 03, 2026 11:49:07 SA org.apache.coyote.AbstractProtocol init
+INFO: Initializing ProtocolHandler ["http-nio-8080"]
+thg 9 03, 2026 11:49:07 SA org.apache.catalina.startup.Catalina load
+INFO: Server initialization in [719] milliseconds
+thg 9 03, 2026 11:49:07 SA org.apache.catalina.core.StandardService startInternal
+INFO: Starting service [Catalina]
+thg 9 03, 2026 11:49:07 SA org.apache.catalina.core.StandardEngine startInternal
+INFO: Starting Servlet engine: [Apache Tomcat/11.0.4]
+thg 9 03, 2026 11:49:10 SA org.apache.jasper.servlet.TldScanner scanJars
+INFO: At least one JAR was scanned for TLDs yet contained no TLDs. Enable debug logging for this logger for a complete list of JARs that were scanned but no TLDs were found in them. Skipping unneeded JARs during scanning can improve startup time and JSP compilation time.
+thg 9 03, 2026 11:49:10 SA org.sitemesh.webapp.contentfilter.ContentBufferingFilter init
+INFO: SiteMesh 3.3.0-RC1 initialized with filter name 'sitemesh'
+thg 9 03, 2026 11:49:10 SA org.apache.coyote.AbstractProtocol start
+INFO: Starting ProtocolHandler ["http-nio-8080"]
+thg 9 03, 2026 11:49:10 SA org.apache.catalina.startup.Catalina start
+INFO: Server startup in [2780] milliseconds
+thg 9 03, 2026 11:49:10 SA org.hibernate.jpa.internal.util.LogHelper logPersistenceUnitInformation
+INFO: HHH000204: Processing PersistenceUnitInfo [name: dataSource]
+thg 9 03, 2026 11:49:11 SA org.hibernate.Version logVersion
+INFO: HHH000412: Hibernate ORM core version 6.5.2.Final
+thg 9 03, 2026 11:49:11 SA org.hibernate.cache.internal.RegionFactoryInitiator initiateService
+INFO: HHH000026: Second-level cache disabled
+thg 9 03, 2026 11:49:11 SA org.hibernate.engine.jdbc.connections.internal.DriverManagerConnectionProviderImpl configure
+WARN: HHH10001002: Using built-in connection pool (not intended for production use)
+thg 9 03, 2026 11:49:11 SA org.hibernate.engine.jdbc.connections.internal.DriverManagerConnectionProviderImpl buildCreator
+INFO: HHH10001005: Loaded JDBC driver class: com.mysql.cj.jdbc.Driver
+thg 9 03, 2026 11:49:11 SA org.hibernate.engine.jdbc.connections.internal.DriverManagerConnectionProviderImpl buildCreator
+INFO: HHH10001012: Connecting with JDBC URL [jdbc:mysql://localhost:3306/user_db?useUnicode=true&characterEncoding=UTF-8&useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=Asia/Ho_Chi_Minh]
+thg 9 03, 2026 11:49:11 SA org.hibernate.engine.jdbc.connections.internal.DriverManagerConnectionProviderImpl buildCreator
+INFO: HHH10001001: Connection properties: {password=****, user=root}
+thg 9 03, 2026 11:49:11 SA org.hibernate.engine.jdbc.connections.internal.DriverManagerConnectionProviderImpl buildCreator
+INFO: HHH10001003: Autocommit mode: false
+thg 9 03, 2026 11:49:11 SA org.hibernate.engine.jdbc.connections.internal.DriverManagerConnectionProviderImpl$PooledConnections <init>
+INFO: HHH10001115: Connection pool size: 20 (min=1)
+thg 9 03, 2026 11:49:12 SA org.hibernate.engine.jdbc.dialect.internal.DialectFactoryImpl constructDialect
+WARN: HHH90000025: MySQLDialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
+thg 9 03, 2026 11:49:15 SA org.hibernate.engine.transaction.jta.platform.internal.JtaPlatformInitiator initiateService
+INFO: HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+thg 9 03, 2026 11:49:15 SA org.hibernate.resource.transaction.backend.jdbc.internal.DdlTransactionIsolatorNonJtaImpl getIsolatedConnection
+INFO: HHH10001501: Connection obtained from JdbcConnectionAccess [org.hibernate.engine.jdbc.env.internal.JdbcEnvironmentInitiator$ConnectionProviderJdbcConnectionAccess@4012b468] for (non-JTA) DDL execution was not in auto-commit mode; the Connection 'local transaction' will be committed and the Connection will be set into auto-commit mode.

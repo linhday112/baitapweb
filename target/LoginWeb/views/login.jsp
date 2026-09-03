@@ -11,6 +11,10 @@
 
     <h1>Đăng nhập</h1>
 
+    <% if ("register_success".equals(request.getParameter("msg"))) { %>
+        <p style="color: #28a745; font-weight: bold;">Đăng ký thành công! Vui lòng đăng nhập.</p>
+    <% } %>
+
     <p style="color: #b00020;">${alert}</p>
 
     <form action="${pageContext.request.contextPath}/login"
@@ -18,7 +22,7 @@
 
         <div>
             <label>Username:</label>
-            <input type="text" name="username">
+            <input type="text" name="username" required>
         </div>
 
         <br>
@@ -32,7 +36,7 @@
 
         <div>
             <label>Password:</label>
-            <input type="password" name="password">
+            <input type="password" name="password" required>
         </div>
 
         <br>
@@ -42,6 +46,11 @@
         </button>
 
     </form>
+
+    <br>
+    <div>
+        Chưa có tài khoản? <a href="${pageContext.request.contextPath}/register">Đăng ký tại đây</a>
+    </div>
 
 </body>
 </html>

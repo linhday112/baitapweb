@@ -14,7 +14,7 @@ import linh_room.model.User;
 import linh_room.service.UserService;
 import linh_room.service.UserServiceImpl;
 
-@WebFilter({ "/home", "/admin/*" })
+@WebFilter({ "/home", "/admin/*", "/profile" })
 public class AuthenticationFilter implements Filter {
 
     private final UserService userService = new UserServiceImpl();
@@ -36,6 +36,13 @@ public class AuthenticationFilter implements Filter {
                 httpResponse.sendRedirect(httpRequest.getContextPath() + "/login");
                 return;
             }
+        }
+
+        User account = (User) session.getAttribute("account");
+        String servletPath = httpRequest.getServletPath();
+        if (servletPath != null && servletPath.startsWith("/admin") && !account.isAdmin()) {
+            httpResponse.sendRedirect(httpRequest.getContextPath() + "/home?error=access_denied");
+            return;
         }
 
         chain.doFilter(request, response);

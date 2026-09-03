@@ -1,0 +1,30 @@
+Hibernate: 
+    select
+        u1_0.id,
+        u1_0.created_at,
+        u1_0.full_name,
+        u1_0.images,
+        u1_0.password,
+        u1_0.phone,
+        u1_0.role,
+        u1_0.role_id,
+        u1_0.username 
+    from
+        users u1_0 
+    where
+        u1_0.username=?
+Hibernate: 
+    select
+        u1_0.id,
+        u1_0.created_at,
+        u1_0.full_name,
+        u1_0.images,
+        u1_0.password,
+        u1_0.phone,
+        u1_0.role,
+        u1_0.role_id,
+        u1_0.username 
+    from
+        users u1_0 
+    where
+        u1_0.username=?

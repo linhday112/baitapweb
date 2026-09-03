@@ -39,7 +39,7 @@ public class CategoryServlet extends HttpServlet {
         String path = request.getServletPath();
 
         if (path.endsWith("/add")) {
-            request.getRequestDispatcher("/views/category-form.jsp").forward(request, response);
+            request.getRequestDispatcher("/views/category-form.jsp").include(request, response);
         } else if (path.endsWith("/edit")) {
             try {
                 int id = Integer.parseInt(request.getParameter("id"));
@@ -49,7 +49,7 @@ public class CategoryServlet extends HttpServlet {
                     return;
                 }
                 request.setAttribute("category", category);
-                request.getRequestDispatcher("/views/category-form.jsp").forward(request, response);
+                request.getRequestDispatcher("/views/category-form.jsp").include(request, response);
             } catch (Exception e) {
                 response.sendRedirect(request.getContextPath() + "/admin/category/list?error=invalid_id");
             }
@@ -72,7 +72,7 @@ public class CategoryServlet extends HttpServlet {
                 categories = categoryService.getAll();
             }
             request.setAttribute("categories", categories);
-            request.getRequestDispatcher("/views/category-list.jsp").forward(request, response);
+            request.getRequestDispatcher("/views/category-list.jsp").include(request, response);
         }
     }
 
@@ -133,11 +133,11 @@ public class CategoryServlet extends HttpServlet {
         } catch (IllegalArgumentException e) {
             request.setAttribute("error", e.getMessage());
             request.setAttribute("category", category);
-            request.getRequestDispatcher("/views/category-form.jsp").forward(request, response);
+            request.getRequestDispatcher("/views/category-form.jsp").include(request, response);
         } catch (Exception e) {
             request.setAttribute("error", "Lỗi xử lý cơ sở dữ liệu: " + e.getMessage());
             request.setAttribute("category", category);
-            request.getRequestDispatcher("/views/category-form.jsp").forward(request, response);
+            request.getRequestDispatcher("/views/category-form.jsp").include(request, response);
         }
     }
 }

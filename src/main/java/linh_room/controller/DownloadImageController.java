@@ -31,6 +31,9 @@ public class DownloadImageController extends HttpServlet {
         if (!file.exists()) {
             file = new File(Constant.getCategoryUploadDir(), fileName);
         }
+        if (!file.exists()) {
+            file = new File(Constant.getUserUploadDir(), fileName);
+        }
 
         if (!file.exists() || file.isDirectory()) {
             response.sendError(HttpServletResponse.SC_NOT_FOUND);

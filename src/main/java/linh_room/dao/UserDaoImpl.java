@@ -23,4 +23,57 @@ public class UserDaoImpl implements UserDao {
             em.close();
         }
     }
+
+    @Override
+    public void insert(User user) {
+        EntityManager em = JPAConfig.getEntityManager();
+        jakarta.persistence.EntityTransaction trans = em.getTransaction();
+        try {
+            trans.begin();
+            em.persist(user);
+            trans.commit();
+        } catch (Exception e) {
+            if (trans.isActive()) {
+                trans.rollback();
+            }
+            throw new IllegalStateException("Không thể lưu thông tin người dùng vào cơ sở dữ liệu.", e);
+        } finally {
+            em.close();
+        }
+    }
+
+    @Override
+    public boolean checkExistUsername(String username) {
+        return get(username) != null;
+    }
+
+    @Override
+    public User findById(int id) {
+        EntityManager em = JPAConfig.getEntityManager();
+        try {
+            return em.find(User.class, id);
+        } catch (Exception e) {
+            throw new IllegalStateException("Không thể tìm người dùng theo ID.", e);
+        } finally {
+            em.close();
+        }
+    }
+
+    @Override
+    public void update(User user) {
+        EntityManager em = JPAConfig.getEntityManager();
+        jakarta.persistence.EntityTransaction trans = em.getTransaction();
+        try {
+            trans.begin();
+            em.merge(user);
+            trans.commit();
+        } catch (Exception e) {
+            if (trans.isActive()) {
+                trans.rollback();
+            }
+            throw new IllegalStateException("Không thể cập nhật thông tin người dùng.", e);
+        } finally {
+            em.close();
+        }
+    }
 }

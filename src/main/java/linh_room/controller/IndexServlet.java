@@ -1,15 +1,18 @@
 package linh_room.controller;
 
+import java.io.IOException;
+
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 
-import java.io.IOException;
-
-@WebServlet("/")
+@WebServlet(urlPatterns = { "", "/" })
 public class IndexServlet extends HttpServlet {
+
+    private static final long serialVersionUID = 1L;
 
     @Override
     protected void doGet(
@@ -17,7 +20,11 @@ public class IndexServlet extends HttpServlet {
             HttpServletResponse response)
             throws ServletException, IOException {
 
-        request.getRequestDispatcher("/views/index.jsp")
-               .forward(request, response);
+        HttpSession session = request.getSession(false);
+        if (session != null && session.getAttribute("account") != null) {
+            response.sendRedirect(request.getContextPath() + "/home");
+        } else {
+            response.sendRedirect(request.getContextPath() + "/login");
+        }
     }
 }

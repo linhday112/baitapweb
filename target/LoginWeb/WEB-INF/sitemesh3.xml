@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<sitemesh>
+    <dispatch-mode>include</dispatch-mode>
+    <decorator-prefix>/</decorator-prefix>
+
+    <!-- Exclude static & auth paths -->
+    <mapping path="/login*" exclude="true"/>
+    <mapping path="/register*" exclude="true"/>
+    <mapping path="/logout*" exclude="true"/>
+    <mapping path="/image*" exclude="true"/>
+    <mapping path="/decorators/*" exclude="true"/>
+    <mapping path="/static/*" exclude="true"/>
+    <mapping path="/assets/*" exclude="true"/>
+
+    <!-- Decorators -->
+    <mapping path="/admin/*" decorator="decorators/admin.jsp"/>
+    <mapping path="/profile*" decorator="decorators/web.jsp"/>
+    <mapping path="/home*" decorator="decorators/web.jsp"/>
+</sitemesh>
