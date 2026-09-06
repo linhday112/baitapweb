@@ -69,6 +69,20 @@ public class ProfileServlet extends HttpServlet {
         String fullName = request.getParameter("fullName");
         String phone = request.getParameter("phone");
 
+        if (fullName == null || fullName.isBlank()) {
+            request.setAttribute("error", "Vui lòng nhập họ và tên.");
+            request.setAttribute("user", user);
+            request.getRequestDispatcher("/views/profile.jsp").include(request, response);
+            return;
+        }
+
+        if (phone != null && !phone.isBlank() && !phone.trim().matches("^0[0-9]{9}$")) {
+            request.setAttribute("error", "Số điện thoại không hợp lệ (phải bắt đầu bằng số 0 và gồm 10 chữ số).");
+            request.setAttribute("user", user);
+            request.getRequestDispatcher("/views/profile.jsp").include(request, response);
+            return;
+        }
+
         // Xử lý upload file hình ảnh đại diện qua Multipart
         String imagePath = user.getImages();
         try {

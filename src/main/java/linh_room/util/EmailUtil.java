@@ -82,7 +82,7 @@ public class EmailUtil {
             });
 
             Message message = new MimeMessage(session);
-            message.setFrom(new InternetAddress(senderEmail, "Linh Room Web"));
+            message.setFrom(new InternetAddress(senderEmail, "Linh Web"));
             message.setRecipients(Message.RecipientType.TO, InternetAddress.parse(recipientEmail, true));
             message.setSubject(subject);
             message.setContent(bodyContent, "text/html; charset=UTF-8");

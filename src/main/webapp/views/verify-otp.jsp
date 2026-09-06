@@ -1,56 +1,98 @@
-<%@ page contentType="text/html; charset=UTF-8" %>
+<%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ taglib prefix="c" uri="jakarta.tags.core" %>
 
 <!DOCTYPE html>
-<html>
+<html lang="vi">
 <head>
     <meta charset="UTF-8">
-    <title>Xác Thực Mã OTP</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Xác Thực Mã OTP - Linh Web</title>
+    <!-- Bootstrap 5.3.3 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Bootstrap Icons -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
 </head>
 
-<body style="font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background: #f4f6f9; display: flex; justify-content: center; align-items: center; min-height: 100vh; margin: 0;">
+<body class="bg-light d-flex align-items-center justify-content-center min-vh-100 py-4">
 
-    <div style="background: white; padding: 35px 40px; border-radius: 10px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); width: 100%; max-width: 400px;">
-        <h2 style="text-align: center; color: #1a73e8; margin-bottom: 15px;">Kích Hoạt Tài Khoản (OTP)</h2>
-        <p style="text-align: center; color: #666; font-size: 14px; margin-bottom: 20px;">Mã OTP xác thực 6 chữ số đã được gửi tới Email của bạn. Mã có hiệu lực trong 10 phút.</p>
-
-        <c:if test="${not empty alert}">
-            <p style="color: #dc3545; background: #fde8e8; padding: 10px; border-radius: 5px; text-align: center; font-size: 14px;">${alert}</p>
-        </c:if>
-        <c:if test="${not empty msg}">
-            <p style="color: #28a745; background: #e8f8f0; padding: 10px; border-radius: 5px; text-align: center; font-size: 14px;">${msg}</p>
-        </c:if>
-
-        <form action="${pageContext.request.contextPath}/verify-otp" method="post">
-            <div style="margin-bottom: 16px;">
-                <label style="display: block; margin-bottom: 6px; font-weight: 500;">Tên đăng nhập:</label>
-                <input type="text" name="username" value="${username}" style="width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 5px; box-sizing: border-box;" required />
+    <div class="card shadow-sm border-0 rounded-4 p-4 p-sm-5" style="max-width: 420px; width: 100%;">
+        <div class="text-center mb-4">
+            <div class="bg-info bg-opacity-15 text-info-emphasis d-inline-flex p-3 rounded-circle mb-3">
+                <i class="bi bi-shield-check fs-2"></i>
             </div>
-
-            <div style="margin-bottom: 22px;">
-                <label style="display: block; margin-bottom: 6px; font-weight: 500;">Mã OTP 6 chữ số:</label>
-                <input type="text" name="otp" placeholder="VD: 123456" maxlength="6" style="width: 100%; padding: 12px; border: 2px solid #1a73e8; border-radius: 5px; font-size: 20px; text-align: center; letter-spacing: 4px; box-sizing: border-box;" required />
-            </div>
-
-            <button type="submit" style="width: 100%; padding: 12px; background: #1a73e8; color: white; border: none; border-radius: 5px; font-size: 16px; font-weight: bold; cursor: pointer;">Kích Hoạt Tài Khoản</button>
-        </form>
-
-        <form action="${pageContext.request.contextPath}/verify-otp" method="post" style="margin-top: 15px;">
-            <input type="hidden" name="username" value="${username}" />
-            <input type="hidden" name="action" value="resend" />
-            <button type="submit" style="width: 100%; padding: 10px; background: #6c757d; color: white; border: none; border-radius: 5px; font-size: 14px; cursor: pointer;">Gửi lại mã OTP qua Email</button>
-        </form>
-
-        <div style="text-align: center; margin-top: 20px; font-size: 14px;">
-            <a href="${pageContext.request.contextPath}/login" style="color: #1a73e8; text-decoration: none;">Quay lại Đăng nhập</a>
+            <h2 class="h3 fw-bold text-dark mb-1">Xác Thực Mã OTP</h2>
+            <p class="text-muted small">Mã OTP 6 chữ số đã được gửi tới Email của bạn. Mã có hiệu lực trong 10 phút.</p>
         </div>
 
-        <div style="text-align: center; margin-top: 15px; font-size: 13px; color: #666; border-top: 1px solid #eee; padding-top: 15px;">
-            Nhập sai Email hoặc muốn thay đổi thông tin?
-            <br>
-            <a href="${pageContext.request.contextPath}/register?username=${username}" style="color: #1a73e8; text-decoration: none; font-weight: bold; display: inline-block; margin-top: 4px;">Quay lại chỉnh sửa thông tin đăng ký</a>
+        <c:if test="${not empty alert}">
+            <div class="alert alert-danger alert-dismissible fade show small" role="alert">
+                <i class="bi bi-exclamation-triangle-fill me-1"></i> ${alert}
+                <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+            </div>
+        </c:if>
+        <c:if test="${not empty msg}">
+            <div class="alert alert-success alert-dismissible fade show small" role="alert">
+                <i class="bi bi-check-circle-fill me-1"></i> ${msg}
+                <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+            </div>
+        </c:if>
+
+        <form action="${pageContext.request.contextPath}/verify-otp" method="post" class="needs-validation" novalidate>
+            <div class="mb-3">
+                <label for="username" class="form-label fw-semibold">Tên đăng nhập <span class="text-danger">*</span></label>
+                <input type="text" id="username" name="username" value="${username}" class="form-control" placeholder="Tên đăng nhập..." required />
+                <div class="invalid-feedback">
+                    Vui lòng nhập tên đăng nhập.
+                </div>
+            </div>
+
+            <div class="mb-4">
+                <label for="otp" class="form-label fw-semibold">Mã OTP 6 chữ số <span class="text-danger">*</span></label>
+                <input type="text" id="otp" name="otp" placeholder="VD: 123456" maxlength="6" pattern="[0-9]{6}" class="form-control form-control-lg text-center fw-bold text-primary tracking-widest" style="letter-spacing: 6px; font-size: 24px;" required />
+                <div class="invalid-feedback">
+                    Vui lòng nhập chính xác 6 chữ số OTP.
+                </div>
+            </div>
+
+            <button type="submit" class="btn btn-primary w-100 py-2.5 fw-bold shadow-sm rounded-3">
+                <i class="bi bi-check2-circle me-1"></i> Kích Hoạt Tài Khoản
+            </button>
+        </form>
+
+        <form action="${pageContext.request.contextPath}/verify-otp" method="post" class="mt-2">
+            <input type="hidden" name="username" value="${username}" />
+            <input type="hidden" name="action" value="resend" />
+            <button type="submit" class="btn btn-outline-secondary btn-sm w-100 py-2 fw-semibold">
+                <i class="bi bi-arrow-clockwise me-1"></i> Gửi lại mã OTP qua Email
+            </button>
+        </form>
+
+        <div class="text-center mt-4 pt-3 border-top small text-muted">
+            <a href="${pageContext.request.contextPath}/login" class="text-primary text-decoration-none fw-semibold">
+                <i class="bi bi-arrow-left me-1"></i> Quay lại Đăng nhập
+            </a>
+            <div class="mt-2 pt-2 border-top">
+                Quay lại <a href="${pageContext.request.contextPath}/register?username=${username}" class="text-primary text-decoration-none fw-bold">chỉnh sửa thông tin đăng ký</a>
+            </div>
         </div>
     </div>
 
+    <!-- Bootstrap 5 JS & Validation Script -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        (() => {
+            'use strict';
+            const forms = document.querySelectorAll('.needs-validation');
+            Array.from(forms).forEach(form => {
+                form.addEventListener('submit', event => {
+                    if (!form.checkValidity()) {
+                        event.preventDefault();
+                        event.stopPropagation();
+                    }
+                    form.classList.add('was-validated');
+                }, false);
+            });
+        })();
+    </script>
 </body>
 </html>

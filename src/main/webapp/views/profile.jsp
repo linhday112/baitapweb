@@ -4,204 +4,117 @@
 <html lang="vi">
 <head>
     <meta charset="UTF-8">
-    <title>Hồ sơ cá nhân</title>
-    <style>
-        .profile-card {
-            background: #ffffff;
-            border-radius: 12px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.06);
-            padding: 35px 40px;
-            margin: 10px auto;
-            max-width: 650px;
-        }
-        .profile-header {
-            display: flex;
-            align-items: center;
-            gap: 25px;
-            padding-bottom: 25px;
-            border-bottom: 1px solid #edf2f7;
-            margin-bottom: 25px;
-        }
-        .avatar-wrapper {
-            position: relative;
-            width: 110px;
-            height: 110px;
-            flex-shrink: 0;
-        }
-        .avatar-img {
-            width: 110px;
-            height: 110px;
-            border-radius: 50%;
-            object-fit: cover;
-            border: 3px solid #1a73e8;
-            box-shadow: 0 3px 8px rgba(0,0,0,0.12);
-        }
-        .profile-title h2 {
-            font-size: 22px;
-            color: #2d3748;
-            margin-bottom: 5px;
-        }
-        .profile-title p {
-            color: #718096;
-            font-size: 14px;
-        }
-        .form-row {
-            margin-bottom: 20px;
-        }
-        .form-row label {
-            display: block;
-            margin-bottom: 7px;
-            font-weight: 600;
-            color: #4a5568;
-            font-size: 14px;
-        }
-        .form-control {
-            width: 100%;
-            padding: 10px 14px;
-            border: 1px solid #cbd5e0;
-            border-radius: 6px;
-            font-size: 15px;
-            transition: border-color 0.2s;
-        }
-        .form-control:focus {
-            border-color: #1a73e8;
-            outline: none;
-            box-shadow: 0 0 0 3px rgba(26,115,232,0.15);
-        }
-        .form-control[readonly] {
-            background-color: #f7fafc;
-            color: #718096;
-            cursor: not-allowed;
-        }
-        .alert {
-            padding: 12px 16px;
-            border-radius: 6px;
-            margin-bottom: 20px;
-            font-size: 14px;
-        }
-        .alert-success {
-            background-color: #def7ec;
-            color: #03543f;
-            border: 1px solid #bcf0da;
-        }
-        .alert-danger {
-            background-color: #fde8e8;
-            color: #9b1c1c;
-            border: 1px solid #fbd5d5;
-        }
-        .btn-group {
-            display: flex;
-            gap: 12px;
-            margin-top: 25px;
-        }
-        .btn-primary {
-            background-color: #1a73e8;
-            color: white;
-            padding: 11px 22px;
-            border: none;
-            border-radius: 6px;
-            font-size: 15px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: background 0.2s;
-        }
-        .btn-primary:hover {
-            background-color: #1557b0;
-        }
-        .btn-secondary {
-            background-color: #edf2f7;
-            color: #4a5568;
-            padding: 11px 20px;
-            border: none;
-            border-radius: 6px;
-            font-size: 15px;
-            font-weight: 500;
-            text-decoration: none;
-            display: inline-block;
-            text-align: center;
-        }
-        .btn-secondary:hover {
-            background-color: #e2e8f0;
-        }
-        .file-hint {
-            font-size: 12px;
-            color: #718096;
-            margin-top: 4px;
-        }
-    </style>
+    <title>Hồ sơ cá nhân - Linh Web</title>
 </head>
 <body>
 
-<div class="profile-card">
+<div class="card shadow-sm border-0 rounded-4 max-w-650 mx-auto bg-white p-4 p-sm-5 my-3" style="max-width: 650px;">
 
     <c:if test="${param.msg == 'update_success'}">
-        <div class="alert alert-success">
-            ✅ <strong>Thành công!</strong> Thông tin cá nhân và ảnh đại diện đã được cập nhật.
+        <div class="alert alert-success alert-dismissible fade show shadow-sm mb-4" role="alert">
+            <i class="bi bi-check-circle-fill me-2"></i> <strong>Thành công!</strong> Thông tin cá nhân và ảnh đại diện đã được cập nhật.
+            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
         </div>
     </c:if>
 
     <c:if test="${not empty error}">
-        <div class="alert alert-danger">
-            ⚠️ ${error}
+        <div class="alert alert-danger alert-dismissible fade show shadow-sm mb-4" role="alert">
+            <i class="bi bi-exclamation-triangle-fill me-2"></i> ${error}
+            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
         </div>
     </c:if>
 
-    <div class="profile-header">
-        <div class="avatar-wrapper">
+    <div class="d-flex align-items-center gap-4 pb-4 border-bottom mb-4 flex-wrap flex-sm-nowrap">
+        <div class="position-relative flex-shrink-0 mx-auto mx-sm-0">
             <c:choose>
                 <c:when test="${not empty user.images}">
                     <c:choose>
                         <c:when test="${user.images.startsWith('http')}">
-                            <img src="${user.images}" alt="avatar" class="avatar-img" />
+                            <img src="${user.images}" alt="avatar" class="rounded-circle border border-3 border-primary shadow-sm" style="width: 100px; height: 100px; object-fit: cover;" />
                         </c:when>
                         <c:otherwise>
-                            <img src="${pageContext.request.contextPath}/image?fname=${user.images}" alt="avatar" class="avatar-img" />
+                            <img src="${pageContext.request.contextPath}/image?fname=${user.images}" alt="avatar" class="rounded-circle border border-3 border-primary shadow-sm" style="width: 100px; height: 100px; object-fit: cover;" />
                         </c:otherwise>
                     </c:choose>
                 </c:when>
                 <c:otherwise>
-                    <img src="https://cdn-icons-png.flaticon.com/512/3135/3135715.png" alt="avatar" class="avatar-img" />
+                    <img src="https://cdn-icons-png.flaticon.com/512/3135/3135715.png" alt="avatar" class="rounded-circle border border-3 border-primary shadow-sm" style="width: 100px; height: 100px; object-fit: cover;" />
                 </c:otherwise>
             </c:choose>
         </div>
-        <div class="profile-title">
-            <h2>${user.fullName}</h2>
-            <p>Tên đăng nhập: <strong>${user.username}</strong> | Vai trò: <span style="background: #e2e8f0; padding: 2px 8px; border-radius: 10px; font-weight: bold;">${user.role}</span></p>
+        <div>
+            <h3 class="h4 fw-bold text-dark mb-1">${user.fullName}</h3>
+            <div class="text-muted small">
+                <span class="me-2"><i class="bi bi-person me-1"></i>${user.username}</span>
+                <span class="badge ${user.role == 'ADMIN' || user.roleId == 1 ? 'bg-danger' : 'bg-success'} rounded-pill px-2.5 py-1">${user.role}</span>
+            </div>
+            <c:if test="${not empty user.email}">
+                <div class="text-secondary small mt-1">
+                    <i class="bi bi-envelope me-1"></i>${user.email}
+                </div>
+            </c:if>
         </div>
     </div>
 
-    <!-- Form cập nhật thông tin User với Multipart/form-data -->
-    <form action="${pageContext.request.contextPath}/profile" method="post" enctype="multipart/form-data">
+    <!-- Form cập nhật thông tin User -->
+    <form action="${pageContext.request.contextPath}/profile" method="post" enctype="multipart/form-data" class="needs-validation" novalidate>
         
-        <div class="form-row">
-            <label>Tên đăng nhập (Username):</label>
-            <input type="text" class="form-control" value="${user.username}" readonly />
+        <div class="mb-3">
+            <label for="usernameDisplay" class="form-label fw-semibold">Tên đăng nhập (Username):</label>
+            <input type="text" id="usernameDisplay" class="form-control bg-light text-muted" value="${user.username}" readonly />
         </div>
 
-        <div class="form-row">
-            <label for="fullName">Họ và tên (Fullname):</label>
+        <div class="mb-3">
+            <label for="fullName" class="form-label fw-semibold">Họ và tên (Full Name) <span class="text-danger">*</span>:</label>
             <input type="text" id="fullName" name="fullName" class="form-control" value="${user.fullName}" required placeholder="Nhập họ và tên..." />
+            <div class="invalid-feedback">
+                Vui lòng nhập họ và tên của bạn.
+            </div>
         </div>
 
-        <div class="form-row">
-            <label for="phone">Số điện thoại (Phone):</label>
-            <input type="tel" id="phone" name="phone" class="form-control" value="${user.phone}" placeholder="Ví dụ: 0912345678" />
+        <div class="mb-3">
+            <label for="phone" class="form-label fw-semibold">Số điện thoại (Phone):</label>
+            <input type="tel" id="phone" name="phone" class="form-control" value="${user.phone}" pattern="^0[0-9]{9}$" placeholder="Ví dụ: 0912345678" />
+            <div class="invalid-feedback">
+                Số điện thoại không hợp lệ (phải bắt đầu bằng số 0 và gồm 10 chữ số).
+            </div>
         </div>
 
-        <div class="form-row">
-            <label for="imageFile">Ảnh đại diện mới (Images):</label>
+        <div class="mb-4">
+            <label for="imageFile" class="form-label fw-semibold">Thay đổi ảnh đại diện mới:</label>
             <input type="file" id="imageFile" name="imageFile" class="form-control" accept="image/*" />
-            <p class="file-hint">Định dạng hỗ trợ: JPG, PNG, WEBP, GIF. Kích thước tối đa 10MB.</p>
+            <div class="form-text text-muted">
+                Định dạng hỗ trợ: JPG, PNG, WEBP, GIF. Dung lượng tối đa: 10MB.
+            </div>
         </div>
 
-        <div class="btn-group">
-            <button type="submit" class="btn-primary">💾 Lưu thay đổi</button>
-            <a href="${pageContext.request.contextPath}/home" class="btn-secondary">Quay lại Trang chủ</a>
+        <div class="d-flex gap-2 pt-2">
+            <button type="submit" class="btn btn-primary fw-bold px-4 py-2 shadow-sm rounded-3">
+                <i class="bi bi-save me-1"></i> Lưu thay đổi
+            </button>
+            <a href="${pageContext.request.contextPath}/home" class="btn btn-outline-secondary px-4 py-2 rounded-3">
+                Quay lại Trang chủ
+            </a>
         </div>
 
     </form>
 
 </div>
 
+<script>
+    (() => {
+        'use strict';
+        const forms = document.querySelectorAll('.needs-validation');
+        Array.from(forms).forEach(form => {
+            form.addEventListener('submit', event => {
+                if (!form.checkValidity()) {
+                    event.preventDefault();
+                    event.stopPropagation();
+                }
+                form.classList.add('was-validated');
+            }, false);
+        });
+    })();
+</script>
 </body>
 </html>

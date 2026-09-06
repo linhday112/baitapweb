@@ -15,17 +15,21 @@
     </h3>
 
     <c:if test="${not empty error}">
-        <div class="alert alert-danger mb-4" role="alert">
+        <div class="alert alert-danger alert-dismissible fade show mb-4" role="alert">
             <i class="bi bi-exclamation-triangle-fill me-2"></i><c:out value="${error}" />
+            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
         </div>
     </c:if>
 
-    <form method="post" enctype="multipart/form-data">
+    <form method="post" enctype="multipart/form-data" class="needs-validation" novalidate>
         <input type="hidden" name="id" value="${category != null ? category.id : 0}" />
 
         <div class="mb-3">
             <label for="name" class="form-label fw-semibold">Tên danh mục <span class="text-danger">*</span>:</label>
-            <input type="text" id="name" name="name" class="form-control" value="<c:out value='${category != null ? category.name : ""}'/>" required placeholder="Nhập tên danh mục..." />
+            <input type="text" id="name" name="name" class="form-control" value="<c:out value='${category != null ? category.name : ""}'/>" required minlength="2" placeholder="Nhập tên danh mục..." />
+            <div class="invalid-feedback">
+                Vui lòng nhập tên danh mục (tối thiểu 2 ký tự).
+            </div>
         </div>
 
         <div class="mb-3">
@@ -62,6 +66,22 @@
         </div>
     </form>
 </div>
+
+<script>
+    (() => {
+        'use strict';
+        const forms = document.querySelectorAll('.needs-validation');
+        Array.from(forms).forEach(form => {
+            form.addEventListener('submit', event => {
+                if (!form.checkValidity()) {
+                    event.preventDefault();
+                    event.stopPropagation();
+                }
+                form.classList.add('was-validated');
+            }, false);
+        });
+    })();
+</script>
 
 </body>
 </html>

@@ -6,7 +6,7 @@
 <html>
 <head>
     <meta charset="UTF-8">
-    <title>Trang Chủ - Linh Room Web</title>
+    <title>Trang Chủ - Linh Web</title>
 </head>
 <body>
 
@@ -14,7 +14,7 @@
     <div class="card shadow-sm border-0 mb-4 bg-white">
         <div class="card-body p-4">
             <h2 class="h4 text-primary font-weight-bold mb-3">
-                <i class="bi bi-stars text-warning me-2"></i>Chào mừng đến với Linh Room Web
+                <i class="bi bi-stars text-warning me-2"></i>Chào mừng đến với Linh Web
             </h2>
 
             <div class="d-flex align-items-center gap-3 p-3 bg-light rounded-3 mb-3 border">

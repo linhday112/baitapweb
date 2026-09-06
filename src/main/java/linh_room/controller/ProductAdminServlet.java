@@ -147,6 +147,42 @@ public class ProductAdminServlet extends HttpServlet {
         product.setSold(sold);
         product.setImages(imagePath);
         product.setCategory(category);
+        if (idStr != null && !idStr.isBlank()) {
+            try { product.setId(Integer.parseInt(idStr.trim())); } catch (Exception ignored) {}
+        }
+
+        // Server-side Validation
+        if (product.getName().isBlank()) {
+            request.setAttribute("error", "Tên sản phẩm không được để trống.");
+            request.setAttribute("product", product);
+            request.setAttribute("categories", categoryService.getAll());
+            request.getRequestDispatcher("/views/product-admin-form.jsp").include(request, response);
+            return;
+        }
+
+        if (category == null) {
+            request.setAttribute("error", "Vui lòng chọn 1 danh mục cho sản phẩm.");
+            request.setAttribute("product", product);
+            request.setAttribute("categories", categoryService.getAll());
+            request.getRequestDispatcher("/views/product-admin-form.jsp").include(request, response);
+            return;
+        }
+
+        if (price < 1000) {
+            request.setAttribute("error", "Giá bán của sản phẩm phải từ 1,000 VNĐ trở lên.");
+            request.setAttribute("product", product);
+            request.setAttribute("categories", categoryService.getAll());
+            request.getRequestDispatcher("/views/product-admin-form.jsp").include(request, response);
+            return;
+        }
+
+        if (quantity < 0 || sold < 0) {
+            request.setAttribute("error", "Số lượng tồn kho và số lượng đã bán không được âm.");
+            request.setAttribute("product", product);
+            request.setAttribute("categories", categoryService.getAll());
+            request.getRequestDispatcher("/views/product-admin-form.jsp").include(request, response);
+            return;
+        }
 
         try {
             if (path.endsWith("/edit") || (idStr != null && !idStr.trim().isEmpty() && !idStr.equals("0"))) {

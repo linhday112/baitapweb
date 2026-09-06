@@ -87,6 +87,19 @@ public class CategoryServlet extends HttpServlet {
         String name = request.getParameter("name");
         String iconUrl = request.getParameter("icon");
 
+        if (name == null || name.trim().length() < 2) {
+            Category cat = new Category();
+            if (idStr != null && !idStr.isBlank()) {
+                try { cat.setId(Integer.parseInt(idStr)); } catch (Exception ignored) {}
+            }
+            cat.setName(name != null ? name.trim() : "");
+            cat.setIcon(iconUrl);
+            request.setAttribute("error", "Tên danh mục bắt buộc và phải có ít nhất 2 ký tự.");
+            request.setAttribute("category", cat);
+            request.getRequestDispatcher("/views/category-form.jsp").include(request, response);
+            return;
+        }
+
         // Xử lý upload file hình ảnh đại diện (nếu có)
         String icon = (iconUrl != null && !iconUrl.trim().isEmpty()) ? iconUrl.trim() : null;
         try {

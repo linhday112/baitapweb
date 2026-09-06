@@ -43,7 +43,7 @@ public class VerifyOTPServlet extends HttpServlet {
         if ("resend".equals(action)) {
             User user = userService.get(username);
             if (user != null) {
-                boolean sent = userService.generateAndSendOTP(user, "Mã OTP Kích Hoạt Tài Khoản Linh Room", "Mã OTP Mới Kích Hoạt Tài Khoản");
+                boolean sent = userService.generateAndSendOTP(user, "Mã OTP Kích Hoạt Tài Khoản Linh Web", "Mã OTP Mới Kích Hoạt Tài Khoản");
                 request.setAttribute("msg", sent ? "Đã gửi lại mã OTP mới qua email!" : "Không thể gửi lại OTP. Vui lòng thử lại sau.");
                 if (sent) {
                     request.setAttribute("otpCode", user.getOtp());

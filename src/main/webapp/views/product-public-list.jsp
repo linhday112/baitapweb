@@ -6,7 +6,7 @@
 <html>
 <head>
     <meta charset="UTF-8">
-    <title>Danh Sách Sản Phẩm - Linh Room Web</title>
+    <title>Danh Sách Sản Phẩm - Linh Web</title>
 </head>
 <body>
 

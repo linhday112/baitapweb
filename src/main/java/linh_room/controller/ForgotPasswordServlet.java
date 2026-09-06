@@ -47,7 +47,7 @@ public class ForgotPasswordServlet extends HttpServlet {
             return;
         }
 
-        boolean sent = userService.generateAndSendOTP(user, "Mã OTP Quên Mật Khẩu - Linh Room", "Yêu Cầu Đặt Lại Mật Khẩu");
+        boolean sent = userService.generateAndSendOTP(user, "Mã OTP Quên Mật Khẩu - Linh Web", "Yêu Cầu Đặt Lại Mật Khẩu");
         if (sent) {
             response.sendRedirect(request.getContextPath() + "/reset-password?username=" + user.getUsername() + "&msg=otp_sent");
         } else {

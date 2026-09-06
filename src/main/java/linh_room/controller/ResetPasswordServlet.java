@@ -42,8 +42,22 @@ public class ResetPasswordServlet extends HttpServlet {
             return;
         }
 
+        if (!otp.trim().matches("^[0-9]{6}$")) {
+            request.setAttribute("alert", "Mã OTP phải đúng 6 chữ số.");
+            request.setAttribute("username", username);
+            request.getRequestDispatcher("/views/reset-password.jsp").include(request, response);
+            return;
+        }
+
+        if (newPassword.trim().length() < 6) {
+            request.setAttribute("alert", "Mật khẩu mới phải có ít nhất 6 ký tự.");
+            request.setAttribute("username", username);
+            request.getRequestDispatcher("/views/reset-password.jsp").include(request, response);
+            return;
+        }
+
         if (!newPassword.equals(confirmPassword)) {
-            request.setAttribute("alert", "Mật khẩu xác nhận không khớp.");
+            request.setAttribute("alert", "Mật khẩu xác nhận không trùng khớp.");
             request.setAttribute("username", username);
             request.getRequestDispatcher("/views/reset-password.jsp").include(request, response);
             return;

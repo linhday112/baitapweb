@@ -44,9 +44,8 @@ public class RegisterServlet extends HttpServlet {
         String fullName = request.getParameter("fullName");
         String email = request.getParameter("email");
 
-        if (username == null || username.isBlank()
-                || password == null || password.isBlank()) {
-            request.setAttribute("alert", "Vui lòng nhập đầy đủ tên đăng nhập và mật khẩu.");
+        if (username == null || username.trim().length() < 3) {
+            request.setAttribute("alert", "Tên đăng nhập phải có ít nhất 3 ký tự.");
             request.setAttribute("username", username);
             request.setAttribute("fullName", fullName);
             request.setAttribute("email", email);
@@ -54,8 +53,26 @@ public class RegisterServlet extends HttpServlet {
             return;
         }
 
-        if (rePassword != null && !rePassword.equals(password)) {
-            request.setAttribute("alert", "Mật khẩu xác nhận không khớp.");
+        if (email == null || !email.trim().matches("^[A-Za-z0-9+_.-]+@(.+)$")) {
+            request.setAttribute("alert", "Địa chỉ Email không đúng định dạng hợp lệ.");
+            request.setAttribute("username", username);
+            request.setAttribute("fullName", fullName);
+            request.setAttribute("email", email);
+            request.getRequestDispatcher("/views/register.jsp").forward(request, response);
+            return;
+        }
+
+        if (password == null || password.trim().length() < 6) {
+            request.setAttribute("alert", "Mật khẩu phải chứa ít nhất 6 ký tự.");
+            request.setAttribute("username", username);
+            request.setAttribute("fullName", fullName);
+            request.setAttribute("email", email);
+            request.getRequestDispatcher("/views/register.jsp").forward(request, response);
+            return;
+        }
+
+        if (rePassword == null || !rePassword.equals(password)) {
+            request.setAttribute("alert", "Mật khẩu xác nhận không trùng khớp.");
             request.setAttribute("username", username);
             request.setAttribute("fullName", fullName);
             request.setAttribute("email", email);
@@ -77,7 +94,7 @@ public class RegisterServlet extends HttpServlet {
                 existingUser.setFullName((fullName != null && !fullName.isBlank()) ? fullName.trim() : username.trim());
                 existingUser.setEmail((email != null && !email.isBlank()) ? email.trim() : username.trim() + "@example.com");
                 userService.update(existingUser);
-                boolean sent = userService.generateAndSendOTP(existingUser, "Mã OTP Kích Hoạt Tài Khoản Linh Room", "Xác Thực Kích Hoạt Tài Khoản");
+                boolean sent = userService.generateAndSendOTP(existingUser, "Mã OTP Kích Hoạt Tài Khoản Linh Web", "Xác Thực Kích Hoạt Tài Khoản");
                 if (sent) {
                     response.sendRedirect(request.getContextPath() + "/verify-otp?username=" + existingUser.getUsername() + "&msg=otp_sent");
                 } else {
@@ -104,7 +121,7 @@ public class RegisterServlet extends HttpServlet {
             boolean success = userService.register(newUser);
             if (success) {
                 // Gửi mã OTP xác nhận
-                boolean sent = userService.generateAndSendOTP(newUser, "Mã OTP Kích Hoạt Tài Khoản Linh Room", "Xác Thực Kích Hoạt Tài Khoản");
+                boolean sent = userService.generateAndSendOTP(newUser, "Mã OTP Kích Hoạt Tài Khoản Linh Web", "Xác Thực Kích Hoạt Tài Khoản");
                 if (sent) {
                     response.sendRedirect(request.getContextPath() + "/verify-otp?username=" + newUser.getUsername() + "&msg=otp_sent");
                 } else {

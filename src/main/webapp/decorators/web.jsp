@@ -6,7 +6,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title><sitemesh:write property='title'/> - Linh Room Web</title>
+    <title><sitemesh:write property='title'/> - Linh Web</title>
     <!-- Bootstrap 5.3.3 CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <!-- Bootstrap Icons -->
@@ -44,7 +44,7 @@
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark shadow-sm sticky-top">
         <div class="container">
             <a class="navbar-brand navbar-brand-custom d-flex align-items-center gap-2 text-warning fw-bold" href="${pageContext.request.contextPath}/home">
-                <i class="bi bi-shop fs-4"></i> Linh Room Web
+                <i class="bi bi-shop fs-4"></i> Linh Web
             </a>
             
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarContent" aria-controls="navbarContent" aria-expanded="false" aria-label="Toggle navigation">
