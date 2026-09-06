@@ -39,6 +39,19 @@ public class User implements Serializable {
     @Column(name = "phone", length = 20)
     private String phone;
 
+    @Column(name = "email", length = 150)
+    private String email;
+
+    @Column(name = "status")
+    private Integer status = 1; // 1: Active, 0: Pending OTP activation
+
+    @Column(name = "otp", length = 10)
+    private String otp;
+
+    @jakarta.persistence.Temporal(jakarta.persistence.TemporalType.TIMESTAMP)
+    @Column(name = "otp_expiry")
+    private java.util.Date otpExpiry;
+
     @Column(name = "images", length = 255)
     private String images;
 
@@ -147,6 +160,38 @@ public class User implements Serializable {
 
     public void setPhone(String phone) {
         this.phone = phone;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public Integer getStatus() {
+        return status != null ? status : 1;
+    }
+
+    public void setStatus(Integer status) {
+        this.status = status;
+    }
+
+    public String getOtp() {
+        return otp;
+    }
+
+    public void setOtp(String otp) {
+        this.otp = otp;
+    }
+
+    public java.util.Date getOtpExpiry() {
+        return otpExpiry;
+    }
+
+    public void setOtpExpiry(java.util.Date otpExpiry) {
+        this.otpExpiry = otpExpiry;
     }
 
     public String getImages() {

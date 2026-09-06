@@ -56,6 +56,13 @@ public class LoginServlet extends HttpServlet {
             User user = userService.login(username, password);
 
             if (user != null) {
+                if (user.getStatus() != null && user.getStatus() == 0) {
+                    request.setAttribute("alert", "Tài khoản của bạn chưa được kích hoạt. Vui lòng nhập mã OTP đã gửi qua email để kích hoạt!");
+                    request.setAttribute("username", user.getUsername());
+                    request.getRequestDispatcher("/views/verify-otp.jsp").include(request, response);
+                    return;
+                }
+
                 request.getSession(true).setAttribute("account", user);
                 request.getSession().setMaxInactiveInterval(30 * 60);
 

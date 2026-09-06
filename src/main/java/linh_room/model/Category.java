@@ -27,6 +27,9 @@ public class Category implements Serializable {
     @Column(name = "icons", columnDefinition = "VARCHAR(255)")
     private String icon;
 
+    @jakarta.persistence.OneToMany(mappedBy = "category", cascade = jakarta.persistence.CascadeType.ALL)
+    private java.util.List<Product> products;
+
     public Category() {
     }
 

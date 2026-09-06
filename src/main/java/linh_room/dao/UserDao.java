@@ -13,4 +13,10 @@ public interface UserDao {
     void update(User user);
 
     boolean checkExistUsername(String username);
+
+    User findByEmail(String email);
+
+    java.util.List<User> getAll();
+
+    void delete(int id);
 }

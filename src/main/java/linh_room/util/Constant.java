@@ -23,4 +23,13 @@ public class Constant {
         }
         return dir;
     }
+
+    public static String getProductUploadDir() {
+        String dir = UPLOAD_DIR + File.separator + "product";
+        File folder = new File(dir);
+        if (!folder.exists()) {
+            folder.mkdirs();
+        }
+        return dir;
+    }
 }

@@ -12,6 +12,8 @@ public class UserJPATest {
         UserDao userDao = new UserDaoImpl();
         UserService userService = new UserServiceImpl();
 
+
+
         // 1. Kiểm tra tài khoản admin
         User admin = userDao.get("admin");
         if (admin != null) {

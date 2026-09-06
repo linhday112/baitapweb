@@ -1,5 +1,6 @@
 package linh_room.dao;
 
+import java.util.List;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.NoResultException;
 import jakarta.persistence.TypedQuery;
@@ -72,6 +73,53 @@ public class UserDaoImpl implements UserDao {
                 trans.rollback();
             }
             throw new IllegalStateException("Không thể cập nhật thông tin người dùng.", e);
+        } finally {
+            em.close();
+        }
+    }
+
+    @Override
+    public User findByEmail(String email) {
+        if (email == null || email.isBlank()) return null;
+        EntityManager em = JPAConfig.getEntityManager();
+        try {
+            TypedQuery<User> query = em.createQuery("SELECT u FROM User u WHERE u.email = :email", User.class);
+            query.setParameter("email", email.trim());
+            return query.getSingleResult();
+        } catch (NoResultException e) {
+            return null;
+        } finally {
+            em.close();
+        }
+    }
+
+    @Override
+    public List<User> getAll() {
+        EntityManager em = JPAConfig.getEntityManager();
+        try {
+            TypedQuery<User> query = em.createQuery("SELECT u FROM User u ORDER BY u.id DESC", User.class);
+            return query.getResultList();
+        } finally {
+            em.close();
+        }
+    }
+
+    @Override
+    public void delete(int id) {
+        EntityManager em = JPAConfig.getEntityManager();
+        jakarta.persistence.EntityTransaction trans = em.getTransaction();
+        try {
+            trans.begin();
+            User user = em.find(User.class, id);
+            if (user != null) {
+                em.remove(user);
+            }
+            trans.commit();
+        } catch (Exception e) {
+            if (trans.isActive()) {
+                trans.rollback();
+            }
+            throw new IllegalStateException("Không thể xóa người dùng.", e);
         } finally {
             em.close();
         }

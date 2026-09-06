@@ -100,15 +100,18 @@
 
     <header class="navbar">
         <a href="${pageContext.request.contextPath}/home" class="navbar-brand">
-            🚀 <span>Linh Room Web</span>
+            <span>Linh Room Web</span>
         </a>
 
         <ul class="navbar-menu">
-            <li><a href="${pageContext.request.contextPath}/home">🏠 Trang chủ</a></li>
-            <li><a href="${pageContext.request.contextPath}/profile">👤 Hồ sơ cá nhân (Profile)</a></li>
+            <li><a href="${pageContext.request.contextPath}/home">Trang chủ</a></li>
+            <li><a href="${pageContext.request.contextPath}/product">Sản phẩm</a></li>
+            <li><a href="${pageContext.request.contextPath}/profile">Hồ sơ cá nhân</a></li>
 
             <c:if test="${sessionScope.account.role == 'ADMIN' || sessionScope.account.roleId == 1}">
-                <li><a href="${pageContext.request.contextPath}/admin/category/list">📦 Quản lý Category</a></li>
+                <li><a href="${pageContext.request.contextPath}/admin/category/list">Quản lý Category</a></li>
+                <li><a href="${pageContext.request.contextPath}/admin/product/list">Quản lý Sản phẩm</a></li>
+                <li><a href="${pageContext.request.contextPath}/admin/user/list">Quản lý Tài khoản</a></li>
             </c:if>
 
             <li class="user-nav-box">
@@ -124,7 +127,7 @@
                         </c:choose>
                     </c:when>
                     <c:otherwise>
-                        <img src="https://cdn-icons-png.flaticon.com/512/3135/3135715.png" alt="avatar" class="nav-avatar" />
+                        <img src="https://via.placeholder.com/34?text=U" alt="avatar" class="nav-avatar" />
                     </c:otherwise>
                 </c:choose>
 

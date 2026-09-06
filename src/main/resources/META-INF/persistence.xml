@@ -9,6 +9,7 @@
         <provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
         <class>linh_room.model.Category</class>
         <class>linh_room.model.User</class>
+        <class>linh_room.model.Product</class>
         
         <properties>
             <!-- JDBC Connection Configuration -->
