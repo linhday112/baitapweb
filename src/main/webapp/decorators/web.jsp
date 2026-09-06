@@ -1,96 +1,38 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ taglib prefix="c" uri="jakarta.tags.core" %>
+<c:set var="reqUri" value="${pageContext.request.servletPath}" />
 <!DOCTYPE html>
 <html lang="vi">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title><sitemesh:write property='title'/> - Linh Room</title>
+    <title><sitemesh:write property='title'/> - Linh Room Web</title>
+    <!-- Bootstrap 5.3.3 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Bootstrap Icons -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
     <style>
-        * { box-sizing: border-box; margin: 0; padding: 0; }
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background-color: #f0f2f5;
-            color: #333;
+            background-color: #f4f6f9;
+            font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
             min-height: 100vh;
             display: flex;
             flex-direction: column;
         }
-        .navbar {
-            background-color: #1a73e8;
-            color: white;
-            padding: 12px 30px;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+        .navbar-brand-custom {
+            font-weight: 700;
+            letter-spacing: -0.5px;
         }
-        .navbar-brand {
-            font-size: 20px;
-            font-weight: bold;
-            color: #fff;
-            text-decoration: none;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-        .navbar-menu {
-            display: flex;
-            align-items: center;
-            gap: 18px;
-            list-style: none;
-        }
-        .navbar-menu a {
-            color: #e8f0fe;
-            text-decoration: none;
-            font-size: 15px;
-            font-weight: 500;
-            padding: 6px 12px;
-            border-radius: 4px;
-            transition: background 0.2s;
-        }
-        .navbar-menu a:hover {
-            background-color: rgba(255,255,255,0.2);
-            color: #fff;
-        }
-        .user-nav-box {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            background: rgba(255,255,255,0.12);
-            padding: 4px 12px 4px 6px;
-            border-radius: 20px;
-        }
-        .nav-avatar {
-            width: 34px;
-            height: 34px;
-            border-radius: 50%;
+        .user-avatar {
+            width: 32px;
+            height: 32px;
             object-fit: cover;
-            border: 2px solid white;
-            background: #fff;
+            border-radius: 50%;
+            border: 2px solid #fff;
         }
-        .role-badge {
-            font-size: 11px;
-            padding: 2px 7px;
-            border-radius: 10px;
-            background: #fbbc04;
-            color: #202124;
-            font-weight: bold;
-        }
-        .main-container {
-            flex: 1;
-            max-width: 1000px;
-            width: 100%;
-            margin: 30px auto;
-            padding: 0 20px;
-        }
-        .footer {
+        .footer-custom {
             background-color: #ffffff;
-            border-top: 1px solid #e0e0e0;
-            text-align: center;
-            padding: 18px 20px;
-            font-size: 14px;
-            color: #666;
+            border-top: 1px solid #dee2e6;
             margin-top: auto;
         }
     </style>
@@ -98,54 +40,92 @@
 </head>
 <body>
 
-    <header class="navbar">
-        <a href="${pageContext.request.contextPath}/home" class="navbar-brand">
-            <span>Linh Room Web</span>
-        </a>
+    <!-- Bootstrap 5 Dark Header Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark shadow-sm sticky-top">
+        <div class="container">
+            <a class="navbar-brand navbar-brand-custom d-flex align-items-center gap-2 text-warning fw-bold" href="${pageContext.request.contextPath}/home">
+                <i class="bi bi-shop fs-4"></i> Linh Room Web
+            </a>
+            
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarContent" aria-controls="navbarContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
 
-        <ul class="navbar-menu">
-            <li><a href="${pageContext.request.contextPath}/home">Trang chủ</a></li>
-            <li><a href="${pageContext.request.contextPath}/product">Sản phẩm</a></li>
-            <li><a href="${pageContext.request.contextPath}/profile">Hồ sơ cá nhân</a></li>
+            <div class="collapse navbar-collapse" id="navbarContent">
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0 fw-medium">
+                    <li class="nav-item">
+                        <a class="nav-link ${reqUri == '/home' || reqUri == '/' ? 'text-white fw-bold active' : 'text-white-50'}" href="${pageContext.request.contextPath}/home">
+                            <i class="bi bi-house-door me-1 ${reqUri == '/home' || reqUri == '/' ? 'text-warning' : ''}"></i> Trang chủ
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link ${reqUri.startsWith('/product') ? 'text-white fw-bold active' : 'text-white-50'}" href="${pageContext.request.contextPath}/product">
+                            <i class="bi bi-grid me-1 ${reqUri.startsWith('/product') ? 'text-warning' : ''}"></i> Sản phẩm
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link ${reqUri.startsWith('/profile') ? 'text-white fw-bold active' : 'text-white-50'}" href="${pageContext.request.contextPath}/profile">
+                            <i class="bi bi-person me-1 ${reqUri.startsWith('/profile') ? 'text-warning' : ''}"></i> Hồ sơ cá nhân
+                        </a>
+                    </li>
 
-            <c:if test="${sessionScope.account.role == 'ADMIN' || sessionScope.account.roleId == 1}">
-                <li><a href="${pageContext.request.contextPath}/admin/category/list">Quản lý Category</a></li>
-                <li><a href="${pageContext.request.contextPath}/admin/product/list">Quản lý Sản phẩm</a></li>
-                <li><a href="${pageContext.request.contextPath}/admin/user/list">Quản lý Tài khoản</a></li>
-            </c:if>
+                    <c:if test="${sessionScope.account.role == 'ADMIN' || sessionScope.account.roleId == 1}">
+                        <li class="nav-item">
+                            <a class="nav-link ${reqUri.startsWith('/admin/category') ? 'text-white fw-bold active' : 'text-white-50'}" href="${pageContext.request.contextPath}/admin/category/list">
+                                <i class="bi bi-folder-check me-1 ${reqUri.startsWith('/admin/category') ? 'text-warning' : ''}"></i> Quản lý Category
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link ${reqUri.startsWith('/admin/product') ? 'text-white fw-bold active' : 'text-white-50'}" href="${pageContext.request.contextPath}/admin/product/list">
+                                <i class="bi bi-box-seam me-1 ${reqUri.startsWith('/admin/product') ? 'text-warning' : ''}"></i> Quản lý Sản phẩm
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link ${reqUri.startsWith('/admin/user') ? 'text-white fw-bold active' : 'text-white-50'}" href="${pageContext.request.contextPath}/admin/user/list">
+                                <i class="bi bi-people me-1 ${reqUri.startsWith('/admin/user') ? 'text-warning' : ''}"></i> Quản lý Tài khoản
+                            </a>
+                        </li>
+                    </c:if>
+                </ul>
 
-            <li class="user-nav-box">
-                <c:choose>
-                    <c:when test="${not empty sessionScope.account.images}">
+                <!-- User Profile & Action -->
+                <div class="d-flex align-items-center gap-3">
+                    <div class="d-flex align-items-center gap-2 bg-secondary bg-opacity-25 px-3 py-1 rounded-pill text-white border border-secondary">
                         <c:choose>
-                            <c:when test="${sessionScope.account.images.startsWith('http')}">
-                                <img src="${sessionScope.account.images}" alt="avatar" class="nav-avatar" />
+                            <c:when test="${not empty sessionScope.account.images}">
+                                <c:choose>
+                                    <c:when test="${sessionScope.account.images.startsWith('http')}">
+                                        <img src="${sessionScope.account.images}" alt="avatar" class="user-avatar" />
+                                    </c:when>
+                                    <c:otherwise>
+                                        <img src="${pageContext.request.contextPath}/image?fname=${sessionScope.account.images}" alt="avatar" class="user-avatar" />
+                                    </c:otherwise>
+                                </c:choose>
                             </c:when>
                             <c:otherwise>
-                                <img src="${pageContext.request.contextPath}/image?fname=${sessionScope.account.images}" alt="avatar" class="nav-avatar" />
+                                <img src="https://via.placeholder.com/32?text=U" alt="avatar" class="user-avatar" />
                             </c:otherwise>
                         </c:choose>
-                    </c:when>
-                    <c:otherwise>
-                        <img src="https://via.placeholder.com/34?text=U" alt="avatar" class="nav-avatar" />
-                    </c:otherwise>
-                </c:choose>
+                        <span class="small fw-semibold text-light">${sessionScope.account.fullName}</span>
+                        <span class="badge ${sessionScope.account.role == 'ADMIN' || sessionScope.account.roleId == 1 ? 'bg-danger' : 'bg-success'} rounded-pill">${sessionScope.account.role}</span>
+                    </div>
 
-                <span>${sessionScope.account.fullName}</span>
-                <span class="role-badge">${sessionScope.account.role}</span>
-            </li>
+                    <a href="${pageContext.request.contextPath}/logout" class="btn btn-danger btn-sm rounded-pill px-3 shadow-sm">
+                        <i class="bi bi-box-arrow-right me-1"></i> Đăng xuất
+                    </a>
+                </div>
+            </div>
+        </div>
+    </nav>
 
-            <li><a href="${pageContext.request.contextPath}/logout" style="background: #dc3545; color: white;">Đăng xuất</a></li>
-        </ul>
-    </header>
-
-    <main class="main-container">
+    <!-- Main Content Container -->
+    <main class="container my-4">
         <sitemesh:write property='body'/>
     </main>
 
-    <footer class="footer">
-        <p>&copy; 2026 <strong>Linh Room Project</strong>. Quản lý giao diện bằng <strong>SiteMesh 3</strong> &amp; CSDL MySQL bằng <strong>JPA / Hibernate</strong>.</p>
-    </footer>
 
+
+    <!-- Bootstrap 5.3.3 JS Bundle -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

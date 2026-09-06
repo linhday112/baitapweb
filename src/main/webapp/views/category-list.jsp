@@ -9,82 +9,110 @@
 </head>
 <body>
 
-    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
-        <h2 style="color: #2c3e50; margin: 0; border-left: 4px solid #1a73e8; padding-left: 10px;">Quản Lý Danh Mục (Category)</h2>
-        <a href="${pageContext.request.contextPath}/admin/category/add" style="padding: 10px 20px; background: #27ae60; color: white; text-decoration: none; border-radius: 5px; font-weight: bold;">+ Thêm Danh Mục Mới</a>
+    <div class="d-flex justify-content-between align-items-center mb-4 flex-wrap gap-2">
+        <h2 class="h4 text-dark border-start border-4 border-primary ps-2 mb-0 fw-bold">
+            <i class="bi bi-folder-check text-primary me-1"></i> Quản Lý Danh Mục (Category)
+        </h2>
+        <a href="${pageContext.request.contextPath}/admin/category/add" class="btn btn-success fw-bold shadow-sm">
+            <i class="bi bi-plus-lg me-1"></i> Thêm Danh Mục Mới
+        </a>
     </div>
 
     <!-- Thông báo kết quả -->
     <c:if test="${param.msg == 'added'}">
-        <p style="background: #d4edda; color: #155724; padding: 12px; border-radius: 5px; font-weight: 500;">Thêm danh mục mới thành công!</p>
+        <div class="alert alert-success alert-dismissible fade show shadow-sm mb-3" role="alert">
+            <i class="bi bi-check-circle-fill me-2"></i>Thêm danh mục mới thành công!
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
     </c:if>
     <c:if test="${param.msg == 'updated'}">
-        <p style="background: #cce5ff; color: #004085; padding: 12px; border-radius: 5px; font-weight: 500;">Cập nhật danh mục thành công!</p>
+        <div class="alert alert-info alert-dismissible fade show shadow-sm mb-3" role="alert">
+            <i class="bi bi-info-circle-fill me-2"></i>Cập nhật danh mục thành công!
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
     </c:if>
     <c:if test="${param.msg == 'deleted'}">
-        <p style="background: #e2e3e5; color: #383d41; padding: 12px; border-radius: 5px; font-weight: 500;">Đã xóa danh mục thành công!</p>
+        <div class="alert alert-secondary alert-dismissible fade show shadow-sm mb-3" role="alert">
+            <i class="bi bi-trash-fill me-2"></i>Đã xóa danh mục thành công!
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
     </c:if>
     <c:if test="${param.error != null}">
-        <p style="background: #f8d7da; color: #721c24; padding: 12px; border-radius: 5px; font-weight: 500;">Thao tác không thành công hoặc xảy ra lỗi!</p>
+        <div class="alert alert-danger alert-dismissible fade show shadow-sm mb-3" role="alert">
+            <i class="bi bi-exclamation-triangle-fill me-2"></i>Thao tác không thành công hoặc xảy ra lỗi!
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
     </c:if>
 
-    <!-- Ô tìm kiếm -->
-    <form action="${pageContext.request.contextPath}/admin/category/list" method="get" style="margin-bottom: 20px; display: flex; gap: 10px;">
-        <input type="text" name="keyword" value="<c:out value='${keyword}'/>" placeholder="Tìm kiếm tên danh mục..." style="padding: 10px; border: 1px solid #ccc; border-radius: 5px; width: 300px;" />
-        <button type="submit" style="padding: 10px 20px; background: #2980b9; color: white; border: none; border-radius: 5px; cursor: pointer; font-weight: bold;">Tìm kiếm</button>
-        <c:if test="${not empty keyword}">
-            <a href="${pageContext.request.contextPath}/admin/category/list" style="padding: 10px 15px; background: #95a5a6; color: white; text-decoration: none; border-radius: 5px;">Hủy tìm kiếm</a>
-        </c:if>
+    <!-- Ô tìm kiếm Bootstrap Input Group -->
+    <form action="${pageContext.request.contextPath}/admin/category/list" method="get" class="mb-4">
+        <div class="input-group" style="max-width: 450px;">
+            <input type="text" name="keyword" value="<c:out value='${keyword}'/>" class="form-control" placeholder="Tìm kiếm tên danh mục..." />
+            <button type="submit" class="btn btn-primary fw-semibold">
+                <i class="bi bi-search me-1"></i> Tìm kiếm
+            </button>
+            <c:if test="${not empty keyword}">
+                <a href="${pageContext.request.contextPath}/admin/category/list" class="btn btn-outline-secondary">Hủy</a>
+            </c:if>
+        </div>
     </form>
 
-    <!-- Bảng danh sách danh mục -->
-    <table style="width: 100%; border-collapse: collapse; background: white; box-shadow: 0 2px 10px rgba(0,0,0,0.05); border-radius: 8px; overflow: hidden;">
-        <thead>
-            <tr style="background-color: #1a73e8; color: white; text-align: left;">
-                <th style="padding: 12px 15px; width: 60px;">STT</th>
-                <th style="padding: 12px 15px; width: 80px;">Hình ảnh</th>
-                <th style="padding: 12px 15px;">Tên Danh Mục</th>
-                <th style="padding: 12px 15px; width: 160px; text-align: center;">Thao tác</th>
-            </tr>
-        </thead>
-        <tbody>
-            <c:choose>
-                <c:when test="${empty categories}">
+    <!-- Bảng Bootstrap 5 danh sách danh mục -->
+    <div class="card shadow-sm border-0 rounded-3 overflow-hidden">
+        <div class="table-responsive">
+            <table class="table table-hover table-striped align-middle mb-0">
+                <thead class="table-primary text-nowrap">
                     <tr>
-                        <td colspan="4" style="padding: 25px; text-align: center; color: #888;">Không có danh mục nào.</td>
+                        <th style="width: 70px;" class="text-center">STT</th>
+                        <th style="width: 100px;">Hình ảnh</th>
+                        <th>Tên Danh Mục</th>
+                        <th style="width: 180px;" class="text-center">Thao tác</th>
                     </tr>
-                </c:when>
-                <c:otherwise>
-                    <c:forEach items="${categories}" var="cat" varStatus="loop">
-                        <tr style="border-bottom: 1px solid #eee;">
-                            <td style="padding: 12px 15px; font-weight: bold;">${loop.count}</td>
-                            <td style="padding: 12px 15px;">
-                                <c:choose>
-                                    <c:when test="${empty cat.icon}">
-                                        <img src="https://via.placeholder.com/45?text=No+Img" alt="no icon" style="width: 45px; height: 45px; object-fit: cover; border-radius: 4px; border: 1px solid #ddd;" />
-                                    </c:when>
-                                    <c:when test="${cat.icon.startsWith('http://') or cat.icon.startsWith('https://')}">
-                                        <img src="<c:out value='${cat.icon}'/>" alt="icon" style="width: 45px; height: 45px; object-fit: cover; border-radius: 4px; border: 1px solid #ddd;" />
-                                    </c:when>
-                                    <c:otherwise>
-                                        <c:url value="/image?fname=${cat.icon}" var="imgUrl" />
-                                        <img src="${imgUrl}" alt="icon" style="width: 45px; height: 45px; object-fit: cover; border-radius: 4px; border: 1px solid #ddd;" />
-                                    </c:otherwise>
-                                </c:choose>
-                            </td>
-                            <td style="padding: 12px 15px; font-weight: 500; color: #2c3e50;"><c:out value="${cat.name}" /></td>
-                            <td style="padding: 12px 15px; text-align: center;">
-                                <a href="${pageContext.request.contextPath}/admin/category/edit?id=${cat.id}" style="padding: 6px 12px; background: #f39c12; color: white; text-decoration: none; border-radius: 4px; font-size: 13px; font-weight: bold; margin-right: 5px;">Sửa</a>
-                                <a href="${pageContext.request.contextPath}/admin/category/delete?id=${cat.id}" 
-                                   onclick="return confirm('Bạn có chắc chắn muốn xóa danh mục \'${cat.name}\' không?');"
-                                   style="padding: 6px 12px; background: #e74c3c; color: white; text-decoration: none; border-radius: 4px; font-size: 13px; font-weight: bold;">Xóa</a>
-                            </td>
-                        </tr>
-                    </c:forEach>
-                </c:otherwise>
-            </c:choose>
-        </tbody>
-    </table>
+                </thead>
+                <tbody>
+                    <c:choose>
+                        <c:when test="${empty categories}">
+                            <tr>
+                                <td colspan="4" class="text-center py-4 text-muted">Không có danh mục nào.</td>
+                            </tr>
+                        </c:when>
+                        <c:otherwise>
+                            <c:forEach items="${categories}" var="cat" varStatus="loop">
+                                <tr>
+                                    <td class="text-center fw-bold text-secondary">${loop.count}</td>
+                                    <td>
+                                        <c:choose>
+                                            <c:when test="${empty cat.icon}">
+                                                <img src="https://via.placeholder.com/45?text=No+Img" alt="no icon" class="rounded border" style="width: 45px; height: 45px; object-fit: cover;" />
+                                            </c:when>
+                                            <c:when test="${cat.icon.startsWith('http://') or cat.icon.startsWith('https://')}">
+                                                <img src="<c:out value='${cat.icon}'/>" alt="icon" class="rounded border" style="width: 45px; height: 45px; object-fit: cover;" />
+                                            </c:when>
+                                            <c:otherwise>
+                                                <c:url value="/image?fname=${cat.icon}" var="imgUrl" />
+                                                <img src="${imgUrl}" alt="icon" class="rounded border" style="width: 45px; height: 45px; object-fit: cover;" />
+                                            </c:otherwise>
+                                        </c:choose>
+                                    </td>
+                                    <td class="fw-semibold text-dark"><c:out value="${cat.name}" /></td>
+                                    <td class="text-center text-nowrap">
+                                        <a href="${pageContext.request.contextPath}/admin/category/edit?id=${cat.id}" class="btn btn-warning btn-sm fw-semibold me-1">
+                                            <i class="bi bi-pencil-square"></i> Sửa
+                                        </a>
+                                        <a href="${pageContext.request.contextPath}/admin/category/delete?id=${cat.id}" 
+                                           onclick="return confirm('Bạn có chắc chắn muốn xóa danh mục \'${cat.name}\' không?');"
+                                           class="btn btn-danger btn-sm fw-semibold">
+                                            <i class="bi bi-trash"></i> Xóa
+                                        </a>
+                                    </td>
+                                </tr>
+                            </c:forEach>
+                        </c:otherwise>
+                    </c:choose>
+                </tbody>
+            </table>
+        </div>
+    </div>
 
 </body>
 </html>

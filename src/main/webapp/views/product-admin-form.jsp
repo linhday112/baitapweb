@@ -9,13 +9,15 @@
 </head>
 <body>
 
-    <div style="max-width: 650px; margin: 0 auto; background: white; padding: 30px; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.08);">
-        <h2 style="color: #2c3e50; margin-bottom: 20px; border-bottom: 2px solid #eee; padding-bottom: 10px;">
-            ${product != null && product.id > 0 ? 'Chỉnh Sửa Sản Phẩm' : 'Thêm Sản Phẩm Mới'}
-        </h2>
+    <div class="card shadow-sm border-0 rounded-3 max-w-650 mx-auto bg-white p-4" style="max-width: 650px;">
+        <h3 class="h4 text-dark border-bottom pb-3 mb-4 fw-bold">
+            <i class="bi bi-box-seam-fill text-primary me-2"></i>${product != null && product.id > 0 ? 'Chỉnh Sửa Sản Phẩm' : 'Thêm Sản Phẩm Mới'}
+        </h3>
 
         <c:if test="${not empty error}">
-            <p style="color: #721c24; background: #f8d7da; padding: 10px; border-radius: 4px; font-size: 14px;">${error}</p>
+            <div class="alert alert-danger mb-4" role="alert">
+                <i class="bi bi-exclamation-triangle-fill me-2"></i>${error}
+            </div>
         </c:if>
 
         <form action="${product != null && product.id > 0 ? pageContext.request.contextPath.concat('/admin/product/edit') : pageContext.request.contextPath.concat('/admin/product/add')}"
@@ -23,14 +25,14 @@
 
             <input type="hidden" name="id" value="${product.id}" />
 
-            <div style="margin-bottom: 18px;">
-                <label style="display: block; font-weight: bold; margin-bottom: 6px;">Tên sản phẩm (*):</label>
-                <input type="text" name="name" value="${product.name}" style="width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 4px; box-sizing: border-box;" required />
+            <div class="mb-3">
+                <label class="form-label fw-semibold">Tên sản phẩm <span class="text-danger">*</span>:</label>
+                <input type="text" name="name" value="${product.name}" class="form-control" placeholder="Nhập tên sản phẩm..." required />
             </div>
 
-            <div style="margin-bottom: 18px;">
-                <label style="display: block; font-weight: bold; margin-bottom: 6px;">Danh mục sản phẩm:</label>
-                <select name="categoryId" style="width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 4px; box-sizing: border-box;">
+            <div class="mb-3">
+                <label class="form-label fw-semibold">Danh mục sản phẩm:</label>
+                <select name="categoryId" class="form-select">
                     <option value="">-- Chọn danh mục --</option>
                     <c:forEach var="cat" items="${categories}">
                         <option value="${cat.id}" ${product != null && product.category != null && product.category.id == cat.id ? 'selected' : ''}>
@@ -40,44 +42,48 @@
                 </select>
             </div>
 
-            <div style="display: flex; gap: 15px; margin-bottom: 18px;">
-                <div style="flex: 1;">
-                    <label style="display: block; font-weight: bold; margin-bottom: 6px;">Giá bán (VNĐ):</label>
-                    <input type="number" name="price" value="${product.price}" step="1000" style="width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 4px; box-sizing: border-box;" required />
+            <div class="row g-3 mb-3">
+                <div class="col-md-4">
+                    <label class="form-label fw-semibold">Giá bán (VNĐ) <span class="text-danger">*</span>:</label>
+                    <input type="number" name="price" value="${product.price}" step="1000" class="form-control" required />
                 </div>
-                <div style="flex: 1;">
-                    <label style="display: block; font-weight: bold; margin-bottom: 6px;">Số lượng tồn kho:</label>
-                    <input type="number" name="quantity" value="${product.quantity}" style="width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 4px; box-sizing: border-box;" required />
+                <div class="col-md-4">
+                    <label class="form-label fw-semibold">Tồn kho <span class="text-danger">*</span>:</label>
+                    <input type="number" name="quantity" value="${product.quantity}" class="form-control" required />
                 </div>
-                <div style="flex: 1;">
-                    <label style="display: block; font-weight: bold; margin-bottom: 6px;">Số lượng đã bán:</label>
-                    <input type="number" name="sold" value="${product != null ? product.sold : 0}" min="0" style="width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 4px; box-sizing: border-box;" required />
+                <div class="col-md-4">
+                    <label class="form-label fw-semibold">Đã bán <span class="text-danger">*</span>:</label>
+                    <input type="number" name="sold" value="${product != null ? product.sold : 0}" min="0" class="form-control" required />
                 </div>
             </div>
 
-            <div style="margin-bottom: 18px;">
-                <label style="display: block; font-weight: bold; margin-bottom: 6px;">Mô tả sản phẩm:</label>
-                <textarea name="description" rows="4" style="width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 4px; box-sizing: border-box;">${product.description}</textarea>
+            <div class="mb-3">
+                <label class="form-label fw-semibold">Mô tả sản phẩm:</label>
+                <textarea name="description" rows="4" class="form-control" placeholder="Nhập mô tả chi tiết sản phẩm...">${product.description}</textarea>
             </div>
 
-            <div style="margin-bottom: 22px;">
-                <label style="display: block; font-weight: bold; margin-bottom: 6px;">Chọn file ảnh sản phẩm (Upload Multipart):</label>
-                <input type="file" name="imageFile" accept="image/*" style="display: block; margin-bottom: 8px;" />
+            <div class="mb-4">
+                <label class="form-label fw-semibold">Chọn file ảnh sản phẩm (Upload File):</label>
+                <input type="file" name="imageFile" accept="image/*" class="form-control mb-2" />
 
-                <label style="display: block; font-size: 13px; color: #666; margin-top: 6px;">Hoặc nhập URL hình ảnh:</label>
-                <input type="text" name="imageUrl" value="${product.images}" placeholder="https://..." style="width: 100%; padding: 8px; border: 1px solid #ccc; border-radius: 4px; box-sizing: border-box;" />
+                <label class="form-label fw-semibold text-muted small">Hoặc nhập URL hình ảnh:</label>
+                <input type="text" name="imageUrl" value="${product.images}" placeholder="https://example.com/image.jpg" class="form-control" />
 
                 <c:if test="${not empty product.images}">
-                    <div style="margin-top: 10px;">
-                        <p style="font-size: 13px; color: #666;">Ảnh hiện tại:</p>
-                        <img src="${product.getImageUrl(pageContext.request.contextPath)}" alt="Current Image" style="width: 100px; height: 100px; object-fit: cover; border-radius: 4px; border: 1px solid #ddd;" />
+                    <div class="mt-2">
+                        <small class="text-muted d-block mb-1">Ảnh hiện tại:</small>
+                        <img src="${product.getImageUrl(pageContext.request.contextPath)}" alt="Current Image" class="img-thumbnail" style="width: 100px; height: 100px; object-fit: cover;" />
                     </div>
                 </c:if>
             </div>
 
-            <div style="display: flex; gap: 10px;">
-                <button type="submit" style="padding: 12px 25px; background: #27ae60; color: white; border: none; border-radius: 4px; font-weight: bold; cursor: pointer;">Lưu Sản Phẩm</button>
-                <a href="${pageContext.request.contextPath}/admin/product/list" style="padding: 12px 20px; background: #7f8c8d; color: white; text-decoration: none; border-radius: 4px;">Hủy bỏ</a>
+            <div class="d-flex gap-2">
+                <button type="submit" class="btn btn-success fw-bold px-4">
+                    <i class="bi bi-save me-1"></i> Lưu Sản Phẩm
+                </button>
+                <a href="${pageContext.request.contextPath}/admin/product/list" class="btn btn-secondary px-4">
+                    Hủy bỏ
+                </a>
             </div>
         </form>
     </div>

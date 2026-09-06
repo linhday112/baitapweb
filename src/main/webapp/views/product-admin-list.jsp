@@ -10,76 +10,109 @@
 </head>
 <body>
 
-    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
-        <h2 style="color: #2c3e50; margin: 0;">Quản Lý Sản Phẩm</h2>
-        <a href="${pageContext.request.contextPath}/admin/product/add" style="padding: 10px 20px; background: #27ae60; color: white; text-decoration: none; border-radius: 5px; font-weight: bold;">+ Thêm Sản Phẩm Mới</a>
+    <div class="d-flex justify-content-between align-items-center mb-4 flex-wrap gap-2">
+        <h2 class="h4 text-dark border-start border-4 border-primary ps-2 mb-0 fw-bold">
+            <i class="bi bi-box-seam text-primary me-1"></i> Quản Lý Sản Phẩm
+        </h2>
+        <a href="${pageContext.request.contextPath}/admin/product/add" class="btn btn-success fw-bold shadow-sm">
+            <i class="bi bi-plus-lg me-1"></i> Thêm Sản Phẩm Mới
+        </a>
     </div>
 
     <!-- Thông báo kết quả -->
     <c:if test="${param.msg == 'added'}">
-        <p style="background: #d4edda; color: #155724; padding: 12px; border-radius: 5px; font-weight: 500;">Thêm sản phẩm thành công!</p>
+        <div class="alert alert-success alert-dismissible fade show shadow-sm mb-3" role="alert">
+            <i class="bi bi-check-circle-fill me-2"></i>Thêm sản phẩm mới thành công!
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
     </c:if>
     <c:if test="${param.msg == 'updated'}">
-        <p style="background: #cce5ff; color: #004085; padding: 12px; border-radius: 5px; font-weight: 500;">Cập nhật sản phẩm thành công!</p>
+        <div class="alert alert-info alert-dismissible fade show shadow-sm mb-3" role="alert">
+            <i class="bi bi-info-circle-fill me-2"></i>Cập nhật sản phẩm thành công!
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
     </c:if>
     <c:if test="${param.msg == 'deleted'}">
-        <p style="background: #e2e3e5; color: #383d41; padding: 12px; border-radius: 5px; font-weight: 500;">Đã xóa sản phẩm thành công!</p>
+        <div class="alert alert-secondary alert-dismissible fade show shadow-sm mb-3" role="alert">
+            <i class="bi bi-trash-fill me-2"></i>Đã xóa sản phẩm thành công!
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
     </c:if>
 
     <!-- Ô tìm kiếm -->
-    <form action="${pageContext.request.contextPath}/admin/product/list" method="get" style="margin-bottom: 20px; display: flex; gap: 10px;">
-        <input type="text" name="keyword" value="${keyword}" placeholder="Tìm kiếm sản phẩm theo tên..." style="padding: 10px; border: 1px solid #ccc; border-radius: 5px; width: 300px;" />
-        <button type="submit" style="padding: 10px 20px; background: #2980b9; color: white; border: none; border-radius: 5px; cursor: pointer; font-weight: bold;">Tìm kiếm</button>
-        <c:if test="${not empty keyword}">
-            <a href="${pageContext.request.contextPath}/admin/product/list" style="padding: 10px 15px; background: #95a5a6; color: white; text-decoration: none; border-radius: 5px;">Hủy tìm kiếm</a>
-        </c:if>
+    <form action="${pageContext.request.contextPath}/admin/product/list" method="get" class="mb-4">
+        <div class="input-group" style="max-width: 450px;">
+            <input type="text" name="keyword" value="${keyword}" class="form-control" placeholder="Tìm kiếm sản phẩm theo tên..." />
+            <button type="submit" class="btn btn-primary fw-semibold">
+                <i class="bi bi-search me-1"></i> Tìm kiếm
+            </button>
+            <c:if test="${not empty keyword}">
+                <a href="${pageContext.request.contextPath}/admin/product/list" class="btn btn-outline-secondary">Hủy</a>
+            </c:if>
+        </div>
     </form>
 
-    <!-- Bảng danh sách sản phẩm (Bài 4.1) -->
-    <table style="width: 100%; border-collapse: collapse; background: white; box-shadow: 0 2px 10px rgba(0,0,0,0.05); border-radius: 8px; overflow: hidden;">
-        <thead>
-            <tr style="background-color: #1a73e8; color: white; text-align: left;">
-                <th style="padding: 12px 15px; width: 60px;">ID</th>
-                <th style="padding: 12px 15px; width: 90px;">Hình ảnh</th>
-                <th style="padding: 12px 15px;">Tên sản phẩm</th>
-                <th style="padding: 12px 15px;">Danh mục</th>
-                <th style="padding: 12px 15px;">Giá bán</th>
-                <th style="padding: 12px 15px; width: 90px;">Số lượng</th>
-                <th style="padding: 12px 15px; width: 90px;">Đã bán</th>
-                <th style="padding: 12px 15px; width: 160px; text-align: center;">Thao tác</th>
-            </tr>
-        </thead>
-        <tbody>
-            <c:choose>
-                <c:when test="${not empty products}">
-                    <c:forEach var="p" items="${products}">
-                        <tr style="border-bottom: 1px solid #eee;">
-                            <td style="padding: 12px 15px; font-weight: bold;">${p.id}</td>
-                            <td style="padding: 12px 15px;">
-                                <img src="${p.getImageUrl(pageContext.request.contextPath)}" alt="${p.name}" style="width: 50px; height: 50px; object-fit: cover; border-radius: 4px;" />
-                            </td>
-                            <td style="padding: 12px 15px; font-weight: 500; color: #2c3e50;">${p.name}</td>
-                            <td style="padding: 12px 15px; color: #16a085;">${p.category != null ? p.category.name : 'Chưa chọn'}</td>
-                            <td style="padding: 12px 15px; font-weight: bold; color: #e74c3c;">
-                                <fmt:formatNumber value="${p.price}" pattern="#,###" /> VNĐ
-                            </td>
-                            <td style="padding: 12px 15px; text-align: center;">${p.quantity}</td>
-                            <td style="padding: 12px 15px; text-align: center; color: #27ae60; font-weight: bold;">${p.sold}</td>
-                            <td style="padding: 12px 15px; text-align: center;">
-                                <a href="${pageContext.request.contextPath}/admin/product/edit?id=${p.id}" style="padding: 6px 12px; background: #f39c12; color: white; text-decoration: none; border-radius: 4px; font-size: 13px; font-weight: bold; margin-right: 5px;">Sửa</a>
-                                <a href="${pageContext.request.contextPath}/admin/product/delete?id=${p.id}" onclick="return confirm('Bạn có chắc chắn muốn xóa sản phẩm này?');" style="padding: 6px 12px; background: #e74c3c; color: white; text-decoration: none; border-radius: 4px; font-size: 13px; font-weight: bold;">Xóa</a>
-                            </td>
-                        </tr>
-                    </c:forEach>
-                </c:when>
-                <c:otherwise>
+    <!-- Bảng Bootstrap 5 danh sách sản phẩm -->
+    <div class="card shadow-sm border-0 rounded-3 overflow-hidden">
+        <div class="table-responsive">
+            <table class="table table-hover table-striped align-middle mb-0">
+                <thead class="table-primary text-nowrap">
                     <tr>
-                        <td colspan="8" style="padding: 25px; text-align: center; color: #888;">Chưa có sản phẩm nào.</td>
+                        <th style="width: 60px;" class="text-center">ID</th>
+                        <th style="width: 80px;">Hình ảnh</th>
+                        <th>Tên sản phẩm</th>
+                        <th>Danh mục</th>
+                        <th>Giá bán</th>
+                        <th class="text-center">Số lượng</th>
+                        <th class="text-center">Đã bán</th>
+                        <th style="width: 160px;" class="text-center">Thao tác</th>
                     </tr>
-                </c:otherwise>
-            </c:choose>
-        </tbody>
-    </table>
+                </thead>
+                <tbody>
+                    <c:choose>
+                        <c:when test="${not empty products}">
+                            <c:forEach var="p" items="${products}">
+                                <tr>
+                                    <td class="text-center fw-bold text-secondary">${p.id}</td>
+                                    <td>
+                                        <img src="${p.getImageUrl(pageContext.request.contextPath)}" alt="${p.name}" class="rounded border" style="width: 48px; height: 48px; object-fit: cover;" />
+                                    </td>
+                                    <td class="fw-semibold text-dark">${p.name}</td>
+                                    <td>
+                                        <span class="badge bg-light text-primary border border-primary-subtle">
+                                            ${p.category != null ? p.category.name : 'Chưa chọn'}
+                                        </span>
+                                    </td>
+                                    <td class="fw-bold text-danger">
+                                        <fmt:formatNumber value="${p.price}" pattern="#,###" /> VNĐ
+                                    </td>
+                                    <td class="text-center fw-semibold text-dark">${p.quantity}</td>
+                                    <td class="text-center">
+                                        <span class="badge bg-success-subtle text-success border border-success-subtle fw-bold fs-6">
+                                            ${p.sold}
+                                        </span>
+                                    </td>
+                                    <td class="text-center text-nowrap">
+                                        <a href="${pageContext.request.contextPath}/admin/product/edit?id=${p.id}" class="btn btn-warning btn-sm fw-semibold me-1">
+                                            <i class="bi bi-pencil-square"></i> Sửa
+                                        </a>
+                                        <a href="${pageContext.request.contextPath}/admin/product/delete?id=${p.id}" onclick="return confirm('Bạn có chắc chắn muốn xóa sản phẩm này?');" class="btn btn-danger btn-sm fw-semibold">
+                                            <i class="bi bi-trash"></i> Xóa
+                                        </a>
+                                    </td>
+                                </tr>
+                            </c:forEach>
+                        </c:when>
+                        <c:otherwise>
+                            <tr>
+                                <td colspan="8" class="text-center py-4 text-muted">Chưa có sản phẩm nào.</td>
+                            </tr>
+                        </c:otherwise>
+                    </c:choose>
+                </tbody>
+            </table>
+        </div>
+    </div>
 
 </body>
 </html>

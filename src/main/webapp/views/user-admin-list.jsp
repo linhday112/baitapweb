@@ -9,95 +9,114 @@
 </head>
 <body>
 
-    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
-        <h2 style="color: #2c3e50; margin: 0; border-left: 4px solid #1a73e8; padding-left: 10px;">Quản Lý Tài Khoản Thành Viên</h2>
-        <span style="color: #666; font-size: 14px;">Tổng số tài khoản: <strong>${users.size()}</strong></span>
+    <div class="d-flex justify-content-between align-items-center mb-4 flex-wrap gap-2">
+        <h2 class="h4 text-dark border-start border-4 border-primary ps-2 mb-0 fw-bold">
+            <i class="bi bi-people-fill text-primary me-1"></i> Quản Lý Tài Khoản Thành Viên
+        </h2>
+        <span class="badge bg-secondary rounded-pill fs-6 px-3 py-2">Tổng số tài khoản: <strong>${users.size()}</strong></span>
     </div>
 
     <!-- Thông báo kết quả -->
     <c:if test="${param.msg == 'deleted'}">
-        <p style="background: #d4edda; color: #155724; padding: 12px; border-radius: 5px; font-weight: 500;">Đã xóa thành công tài khoản thành viên!</p>
+        <div class="alert alert-success alert-dismissible fade show shadow-sm mb-3" role="alert">
+            <i class="bi bi-check-circle-fill me-2"></i>Đã xóa thành công tài khoản thành viên!
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
     </c:if>
     <c:if test="${param.error == 'self_delete'}">
-        <p style="background: #f8d7da; color: #721c24; padding: 12px; border-radius: 5px; font-weight: 500;">Bạn không thể tự xóa tài khoản Admin đang đăng nhập!</p>
+        <div class="alert alert-danger alert-dismissible fade show shadow-sm mb-3" role="alert">
+            <i class="bi bi-exclamation-triangle-fill me-2"></i>Bạn không thể tự xóa tài khoản Admin đang đăng nhập!
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
     </c:if>
     <c:if test="${param.error == 'cannot_delete_admin'}">
-        <p style="background: #f8d7da; color: #721c24; padding: 12px; border-radius: 5px; font-weight: 500;">Không thể xóa tài khoản Quản trị viên (ADMIN)!</p>
+        <div class="alert alert-danger alert-dismissible fade show shadow-sm mb-3" role="alert">
+            <i class="bi bi-exclamation-triangle-fill me-2"></i>Không thể xóa tài khoản Quản trị viên (ADMIN)!
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
     </c:if>
 
-    <!-- Bảng danh sách tài khoản -->
-    <table style="width: 100%; border-collapse: collapse; background: white; box-shadow: 0 2px 10px rgba(0,0,0,0.05); border-radius: 8px; overflow: hidden; margin-top: 15px;">
-        <thead>
-            <tr style="background-color: #1a73e8; color: white; text-align: left;">
-                <th style="padding: 12px 15px; width: 50px;">ID</th>
-                <th style="padding: 12px 15px; width: 70px;">Avatar</th>
-                <th style="padding: 12px 15px;">Username</th>
-                <th style="padding: 12px 15px;">Họ và tên</th>
-                <th style="padding: 12px 15px;">Email</th>
-                <th style="padding: 12px 15px;">SĐT</th>
-                <th style="padding: 12px 15px;">Vai trò</th>
-                <th style="padding: 12px 15px;">Trạng thái</th>
-                <th style="padding: 12px 15px; width: 100px; text-align: center;">Thao tác</th>
-            </tr>
-        </thead>
-        <tbody>
-            <c:forEach var="u" items="${users}">
-                <tr style="border-bottom: 1px solid #eee;">
-                    <td style="padding: 12px 15px; font-weight: bold;">${u.id}</td>
-                    <td style="padding: 12px 15px;">
-                        <c:choose>
-                            <c:when test="${not empty u.images}">
+    <!-- Bảng Bootstrap 5 danh sách tài khoản -->
+    <div class="card shadow-sm border-0 rounded-3 overflow-hidden">
+        <div class="table-responsive">
+            <table class="table table-hover table-striped align-middle mb-0">
+                <thead class="table-primary text-nowrap">
+                    <tr>
+                        <th style="width: 50px;" class="text-center">ID</th>
+                        <th style="width: 70px;">Avatar</th>
+                        <th>Username</th>
+                        <th>Họ và tên</th>
+                        <th>Email</th>
+                        <th>SĐT</th>
+                        <th>Vai trò</th>
+                        <th>Trạng thái</th>
+                        <th style="width: 100px;" class="text-center">Thao tác</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <c:forEach var="u" items="${users}">
+                        <tr>
+                            <td class="text-center fw-bold text-secondary">${u.id}</td>
+                            <td>
                                 <c:choose>
-                                    <c:when test="${u.images.startsWith('http')}">
-                                        <img src="${u.images}" alt="avatar" style="width: 40px; height: 40px; border-radius: 50%; object-fit: cover;" />
+                                    <c:when test="${not empty u.images}">
+                                        <c:choose>
+                                            <c:when test="${u.images.startsWith('http')}">
+                                                <img src="${u.images}" alt="avatar" class="rounded-circle border" style="width: 40px; height: 40px; object-fit: cover;" />
+                                            </c:when>
+                                            <c:otherwise>
+                                                <img src="${pageContext.request.contextPath}/image?fname=${u.images}" alt="avatar" class="rounded-circle border" style="width: 40px; height: 40px; object-fit: cover;" />
+                                            </c:otherwise>
+                                        </c:choose>
                                     </c:when>
                                     <c:otherwise>
-                                        <img src="${pageContext.request.contextPath}/image?fname=${u.images}" alt="avatar" style="width: 40px; height: 40px; border-radius: 50%; object-fit: cover;" />
+                                        <img src="https://via.placeholder.com/40?text=U" alt="avatar" class="rounded-circle border" style="width: 40px; height: 40px; object-fit: cover;" />
                                     </c:otherwise>
                                 </c:choose>
-                            </c:when>
-                            <c:otherwise>
-                                <img src="https://via.placeholder.com/40?text=U" alt="avatar" style="width: 40px; height: 40px; border-radius: 50%; object-fit: cover;" />
-                            </c:otherwise>
-                        </c:choose>
-                    </td>
-                    <td style="padding: 12px 15px; font-weight: bold; color: #2c3e50;">${u.username}</td>
-                    <td style="padding: 12px 15px;">${u.fullName}</td>
-                    <td style="padding: 12px 15px; color: #16a085;">${u.email != null ? u.email : '-'}</td>
-                    <td style="padding: 12px 15px;">${u.phone != null ? u.phone : '-'}</td>
-                    <td style="padding: 12px 15px;">
-                        <span style="padding: 3px 10px; border-radius: 12px; font-size: 12px; font-weight: bold; background: ${u.role == 'ADMIN' || u.roleId == 1 ? '#e74c3c' : '#27ae60'}; color: white;">
-                            ${u.role}
-                        </span>
-                    </td>
-                    <td style="padding: 12px 15px;">
-                        <c:choose>
-                            <c:when test="${u.status == 1}">
-                                <span style="color: #27ae60; font-weight: bold;">Đã kích hoạt</span>
-                            </c:when>
-                            <c:otherwise>
-                                <span style="color: #e67e22; font-weight: bold;">Chờ OTP</span>
-                            </c:otherwise>
-                        </c:choose>
-                    </td>
-                    <td style="padding: 12px 15px; text-align: center;">
-                        <c:choose>
-                            <c:when test="${u.role == 'ADMIN' || u.roleId == 1}">
-                                <span style="color: #aaa; font-size: 13px;">(Quản trị)</span>
-                            </c:when>
-                            <c:otherwise>
-                                <a href="${pageContext.request.contextPath}/admin/user/delete?id=${u.id}" 
-                                   onclick="return confirm('Bạn có chắc chắn muốn xóa tài khoản thành viên \'${u.username}\' này không?');" 
-                                   style="padding: 6px 12px; background: #e74c3c; color: white; text-decoration: none; border-radius: 4px; font-size: 13px; font-weight: bold;">
-                                    Xóa
-                                </a>
-                            </c:otherwise>
-                        </c:choose>
-                    </td>
-                </tr>
-            </c:forEach>
-        </tbody>
-    </table>
+                            </td>
+                            <td class="fw-bold text-dark">${u.username}</td>
+                            <td class="fw-semibold">${u.fullName}</td>
+                            <td class="text-primary">${u.email != null ? u.email : '-'}</td>
+                            <td class="text-secondary">${u.phone != null ? u.phone : '-'}</td>
+                            <td>
+                                <span class="badge ${u.role == 'ADMIN' || u.roleId == 1 ? 'bg-danger' : 'bg-success'}">
+                                    ${u.role}
+                                </span>
+                            </td>
+                            <td>
+                                <c:choose>
+                                    <c:when test="${u.status == 1}">
+                                        <span class="badge bg-success-subtle text-success border border-success-subtle">
+                                            <i class="bi bi-check-circle me-1"></i>Đã kích hoạt
+                                        </span>
+                                    </c:when>
+                                    <c:otherwise>
+                                        <span class="badge bg-warning-subtle text-warning border border-warning-subtle">
+                                            Chờ OTP
+                                        </span>
+                                    </c:otherwise>
+                                </c:choose>
+                            </td>
+                            <td class="text-center">
+                                <c:choose>
+                                    <c:when test="${u.role == 'ADMIN' || u.roleId == 1}">
+                                        <span class="text-muted small fw-semibold">(Quản trị)</span>
+                                    </c:when>
+                                    <c:otherwise>
+                                        <a href="${pageContext.request.contextPath}/admin/user/delete?id=${u.id}" 
+                                           onclick="return confirm('Bạn có chắc chắn muốn xóa tài khoản thành viên \'${u.username}\' này không?');" 
+                                           class="btn btn-danger btn-sm fw-semibold">
+                                            <i class="bi bi-trash"></i> Xóa
+                                        </a>
+                                    </c:otherwise>
+                                </c:choose>
+                            </td>
+                        </tr>
+                    </c:forEach>
+                </tbody>
+            </table>
+        </div>
+    </div>
 
 </body>
 </html>
